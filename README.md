@@ -1,40 +1,35 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ProDo
 
-## Getting Started
-
-LOLOLOLOLOL
-
-you better commit LOLOLOLOLOL
-
-First, run the development server:
+We should write some cool stuff here probably
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+codeblock
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+[link](https://github.com/domody/prodo)
+[`link in codeblock`](https://github.com/domody/prodo)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Subtitle
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+> Cool ass indent
 
-## Learn More
+**Bold**
 
-To learn more about Next.js, take a look at the following resources:
+- Bullet Point
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Cool table
+SmartyPants converts ASCII punctuation characters into "smart" typographic punctuation HTML entities. For example:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+|                  | ASCII                           | HTML                          |
+| ---------------- | ------------------------------- | ----------------------------- |
+| Single backticks | `'Isn't this fun?'`             | 'Isn't this fun?'             |
+| Quotes           | `"Isn't this fun?"`             | "Isn't this fun?"             |
+| Dashes           | `-- is en-dash, --- is em-dash` | -- is en-dash, --- is em-dash |
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```mermaid
+graph LR
+A[Head] -- Fingers --> B((Task))
+A --> C(Calendar)
+B --> D{ProDo}
+C --> D
+```
