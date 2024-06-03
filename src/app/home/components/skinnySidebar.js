@@ -36,13 +36,13 @@ const SkinnySidebar = () => {
             <LayoutDashboard className="h-6 w-6 text-dark-100" />
           </a>
 
-          <a className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-lg p-2 hover:bg-white/5">
+          {/* <a className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-lg p-2 hover:bg-white/5">
             <Inbox className="h-6 w-6 text-dark-100" />
           </a>
 
           <a className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-lg p-2 hover:bg-white/5">
             <MessageCircle className="h-6 w-6 text-dark-100" />
-          </a>
+          </a> */}
 
           <a className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-lg p-2 hover:bg-white/5">
             <CalendarDays className="h-6 w-6 text-dark-100" />
@@ -62,12 +62,12 @@ const SkinnySidebar = () => {
             <NotepadText className="h-6 w-6 text-dark-100" />
           </a>
 
-          <a
+          {/* <a
             href=""
             className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-lg p-2 hover:bg-white/5"
           >
             <Folder className="h-6 w-6 text-dark-100" />
-          </a>
+          </a> */}
         </div>
         <div className="mt-auto flex flex-col items-start justify-center space-y-1 pb-4">
           <div className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-lg p-2 hover:bg-white/5">

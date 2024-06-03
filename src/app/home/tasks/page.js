@@ -33,7 +33,14 @@ import { ChevronDown } from "lucide-react";
 
 import Task from "./components/task";
 
-const tasks = [1, 2, 3, 4, 5, 6];
+// Alter length of tasks variable to alter how many tasks appear, i.e [1, 2, 3, etc]
+const tasks = [];
+var tasksEmpty = false;
+
+if (tasks.length == 0) {
+  tasksEmpty = true;
+}
+
 export default function Home() {
   return (
     <main className="flex h-screen w-screen items-start justify-start !overflow-hidden text-balance bg-dark-900">
@@ -97,7 +104,9 @@ export default function Home() {
         <div className="flex min-h-screen w-full flex-col items-start justify-start overflow-x-hidden">
           <div className="h-20 w-full border-b border-dark-500"></div>
           <div className="flex h-[calc(100vh-5rem)] w-full flex-col items-start justify-start overflow-x-hidden">
-            <div className="flex w-full items-center justify-start space-x-2 px-12 py-4">
+            <div
+              className={`flex w-full items-center justify-start space-x-2 px-12 py-4 ${tasksEmpty ? "hidden" : ""}`}
+            >
               <Search className="mr-2 h-4 w-4 text-dark-300" />
               <div className="ml-2 flex cursor-pointer items-center justify-center rounded-md border border-dashed border-[#2F2F2F] py-1 pl-2 pr-2.5 text-sm  transition-all hover:text-dark-50">
                 <Plus className="mr-1.5 h-3 w-3" />
@@ -105,14 +114,7 @@ export default function Home() {
               </div>
             </div>
             <div className="scrollbar-hidden h-full w-full overflow-x-hidden overflow-y-scroll">
-              {/* <div className="sticky left-0 top-0 flex h-14 w-full items-center justify-start bg-dark-800 px-12 py-4 ">
-                <CircleSlash className="mr-3 h-5 w-5 " />
-                In Progress
-                <Plus className="ml-auto h-6 w-6 " />
-              </div> */}
-
-              <div className="flex min-h-14 w-full flex-col items-start justify-start ">
-                {/* {tasks.map(function (object, i) {
+              {tasks.map(function (object, i) {
                 return (
                   <Task
                     title="Create UI for Landing Page"
@@ -122,79 +124,47 @@ export default function Home() {
                     state="InProgress"
                   />
                 );
-              })} */}
-                <Task
-                  title="Create UI for Landing Page"
-                  dateAssigned="Jun 12"
-                  dateEnd="Oct 19"
-                  team="Design"
-                  state="InProgress"
-                />
+              })}
+              <div
+                className={`flex h-full w-full cursor-default select-none flex-col items-center justify-center ${tasksEmpty ? "" : "hidden"}`}
+              >
+                <Folder className="h-24 w-24 text-dark-300" strokeWidth={0.5} />
+                <p className="text-base font-light text-dark-300">
+                  No active or iced tasks yet.
+                </p>
+                <p className="mb-24 mt-2 cursor-pointer text-base font-light text-indigo-500">
+                  Create a new task
+                </p>
               </div>
 
-              {/* <div className="sticky left-0 top-0 flex w-full items-center justify-start bg-dark-800 px-12 py-4 ">
+              {/* <div className="sticky left-0 top-0 flex h-14 w-full items-center justify-start bg-dark-800 px-12 py-4 ">
+                <CircleSlash className="mr-3 h-5 w-5 " />
+                In Progress
+                <Plus className="ml-auto h-6 w-6 " />
+              </div>
+              <div className="sticky left-0 top-0 flex w-full items-center justify-start bg-dark-800 px-12 py-4 ">
                 <Loader className="mr-3 h-5 w-5 " />
                 Assigned
                 <Plus className="ml-auto h-6 w-6 " />
-              </div> */}
-
-              <div className="flex min-h-14 w-full flex-col items-start justify-start   ">
-                <Task
-                  title="Develop App Backend"
-                  dateAssigned="Jun 12"
-                  dateEnd="Oct 19"
-                  team="Design"
-                  state="Assigned"
-                />
               </div>
 
-              {/* <div className="sticky left-0 top-0 flex w-full items-center justify-start bg-dark-800 px-12 py-4 ">
+              <div className="sticky left-0 top-0 flex w-full items-center justify-start bg-dark-800 px-12 py-4 ">
                 <CircleDashed className="mr-3 h-5 w-5 " />
                 Pending Review
                 <Plus className="ml-auto h-6 w-6 " />
-              </div> */}
-
-              <div className="flex min-h-14 w-full flex-col items-start justify-start   ">
-                <Task
-                  title="Create UI for App Frontend"
-                  dateAssigned="Jun 12"
-                  dateEnd="Oct 19"
-                  team="Design"
-                  state="PendingReview"
-                />
               </div>
 
-              {/* <div className="sticky left-0 top-0 flex w-full items-center justify-start bg-dark-800 px-12 py-4 ">
+              <div className="sticky left-0 top-0 flex w-full items-center justify-start bg-dark-800 px-12 py-4 ">
                 <Clock className="mr-3 h-5 w-5 " />
                 Overdue
                 <Plus className="ml-auto h-6 w-6 " />
-              </div> */}
-
-              <div className="flex min-h-14 w-full flex-col items-start justify-start   ">
-                <Task
-                  title="Create UI for Pricing Page"
-                  dateAssigned="Jun 12"
-                  dateEnd="Oct 19"
-                  team="Design"
-                  state="Overdue"
-                />
               </div>
 
-              {/* <div className="sticky left-0 top-0 flex w-full items-center justify-start bg-dark-800 px-12 py-4 ">
+              <div className="sticky left-0 top-0 flex w-full items-center justify-start bg-dark-800 px-12 py-4 ">
                 <CircleCheck className="mr-3 h-5 w-5 " />
                 Completed
                 <Plus className="ml-auto h-6 w-6 " />
               </div> */}
-
-              <div className="flex min-h-14 w-full flex-col items-start justify-start   ">
-                <Task
-                  title="Create Wireframe for Dashboard Page"
-                  dateAssigned="Apr 27"
-                  dateEnd="May 25"
-                  team="Design"
-                  state="Completed"
-                />
-              </div>
             </div>
           </div>
         </div>
