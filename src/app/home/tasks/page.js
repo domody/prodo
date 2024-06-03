@@ -13,35 +13,36 @@ FULL CAPS LOOKS COOL
 ********************************************************
 
 */
+"use client";
 
+import React, { useState } from "react";
 import SkinnySidebar from "../components/skinnySidebar";
-
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
-
-import { Plus } from "lucide-react";
-import { Loader } from "lucide-react";
-import { Clock } from "lucide-react";
-import { CircleDashed } from "lucide-react";
-import { CircleCheck } from "lucide-react";
-import { CircleSlash } from "lucide-react";
-import { Search } from "lucide-react";
-import { Users } from "lucide-react";
-import { HomeIcon } from "lucide-react";
-import { Folder } from "lucide-react";
-import { ChevronDown } from "lucide-react";
-
+import {
+  Plus,
+  Loader,
+  Clock,
+  CircleDashed,
+  CircleCheck,
+  CircleSlash,
+  Search,
+  Users,
+  HomeIcon,
+  Folder,
+  ChevronDown,
+} from "lucide-react";
 import Task from "./components/task";
 
-// Alter length of tasks variable to alter how many tasks appear, i.e [1, 2, 3, etc]
-const tasks = [];
-var tasksEmpty = false;
-
-if (tasks.length == 0) {
-  tasksEmpty = true;
-}
-
 export default function Home() {
+  // Alter length of tasks variable to alter how many tasks appear, i.e [1, 2, 3, etc]
+  const [tasks, setTasks] = useState([]);
+  const tasksEmpty = tasks.length === 0;
+
+  const handleCreateNewTask = () => {
+    setTasks([...tasks, tasks.length + 1]);
+  };
+
   return (
     <main className="flex h-screen w-screen items-start justify-start !overflow-hidden text-balance bg-dark-900">
       <SkinnySidebar />
@@ -105,13 +106,17 @@ export default function Home() {
           <div className="h-20 w-full border-b border-dark-500"></div>
           <div className="flex h-[calc(100vh-5rem)] w-full flex-col items-start justify-start overflow-x-hidden">
             <div
-              className={`flex w-full items-center justify-start space-x-2 px-12 py-4 ${tasksEmpty ? "hidden" : ""}`}
+              className={`flex w-full items-center justify-between space-x-2 border-b border-dark-500 px-12 py-4 ${tasksEmpty ? "hidden" : ""}`}
             >
-              <Search className="mr-2 h-4 w-4 text-dark-300" />
-              <div className="ml-2 flex cursor-pointer items-center justify-center rounded-md border border-dashed border-[#2F2F2F] py-1 pl-2 pr-2.5 text-sm  transition-all hover:text-dark-50">
-                <Plus className="mr-1.5 h-3 w-3" />
-                Filters
+              <div className="flex items-center justify-start">
+                <Search className="mr-2 h-4 w-4 text-dark-300" />
+                <div className="ml-2 flex cursor-pointer items-center justify-center rounded-md border border-dashed border-[#2F2F2F] py-1 pl-2 pr-2.5 text-sm  transition-all hover:text-dark-50">
+                  <Plus className="mr-1.5 h-3 w-3" />
+                  Filters
+                </div>
               </div>
+              <Plus className="ml-auto h-5 w-5 text-dark-200 cursor-pointer"
+              onClick={handleCreateNewTask} />
             </div>
             <div className="scrollbar-hidden h-full w-full overflow-x-hidden overflow-y-scroll">
               {tasks.map(function (object, i) {
@@ -132,7 +137,10 @@ export default function Home() {
                 <p className="text-base font-light text-dark-300">
                   No active or iced tasks yet.
                 </p>
-                <p className="mb-24 mt-2 cursor-pointer text-base font-light text-indigo-500">
+                <p
+                  className="mb-24 mt-2 cursor-pointer text-base font-light text-indigo-500"
+                  onClick={handleCreateNewTask}
+                >
                   Create a new task
                 </p>
               </div>
