@@ -23,7 +23,7 @@ const AddItem = () => {
     <form onSubmit={handleSubmit}>
       <input
         type="text"
-        className="text-dark-800di "
+        className="text-dark-800"
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder="Add a new item"
