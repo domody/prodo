@@ -2,21 +2,23 @@
 
 import { useEffect, useState } from "react";
 import db from "../../../lib/firestore";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import DeleteItem from "./DeleteItem";
 
 const ListItems = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    const fetchItems = async () => {
-      const querySnapshot = await getDocs(collection(db, "items"));
-      setItems(
-        querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })),
-      );
-    };
+    const unsubscribe = onSnapshot(collection(db, "items"), (snapshot) => {
+      const itemsData = snapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setItems(itemsData);
+    });
 
-    fetchItems();
+    // Clean up the listener when the component unmounts
+    return () => unsubscribe();
   }, []);
 
   return (
