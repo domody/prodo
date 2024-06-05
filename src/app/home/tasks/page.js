@@ -32,20 +32,32 @@ import {
   Folder,
   ChevronDown,
 } from "lucide-react";
-import Task from "./components/task";
+// import Task from "./components/Task";
+import AddItem from "@/app/components/AddItem";
+import AddTask from "./components/AddTask";
+import ListTasks from "./components/ListTasks";
 
 export default function Home() {
   // Alter length of tasks variable to alter how many tasks appear, i.e [1, 2, 3, etc]
   const [tasks, setTasks] = useState([]);
   const tasksEmpty = tasks.length === 0;
 
-  const handleCreateNewTask = () => {
-    setTasks([...tasks, tasks.length + 1]);
-  };
+  // const handleCreateNewTask = () => {
+  //   setTasks([...tasks, tasks.length + 1]);
+  // };
+
+  const [visiblity, setVisibility] = useState(false)
+
+  const toggleAddTask = () => {
+    setVisibility(true)
+  }
+
+
 
   return (
     <main className="flex h-screen w-screen items-start justify-start !overflow-hidden text-balance bg-dark-900">
       <SkinnySidebar />
+      <AddTask visible={visiblity} setVisibility={setVisibility}/>
       <div className="flex h-screen w-96 flex-col items-start justify-start border-r border-dark-500">
         <div className="h-20 w-full border-b border-dark-500"></div>
         <div className="h-[calc(100vw - 5rem)] flex w-full flex-col items-start justify-start px-6 py-4">
@@ -106,7 +118,7 @@ export default function Home() {
           <div className="h-20 w-full border-b border-dark-500"></div>
           <div className="flex h-[calc(100vh-5rem)] w-full flex-col items-start justify-start overflow-x-hidden">
             <div
-              className={`flex w-full items-center justify-between space-x-2 border-b border-dark-500 px-12 py-4 ${tasksEmpty ? "hidden" : ""}`}
+              className={`flex w-full items-center justify-between space-x-2 border-b border-dark-500 px-12 py-4`}
             >
               <div className="flex items-center justify-start">
                 <Search className="mr-2 h-4 w-4 text-dark-300" />
@@ -116,63 +128,10 @@ export default function Home() {
                 </div>
               </div>
               <Plus className="ml-auto h-5 w-5 text-dark-200 cursor-pointer"
-              onClick={handleCreateNewTask} />
+              onClick={toggleAddTask} />
             </div>
             <div className="scrollbar-hidden h-full w-full overflow-x-hidden overflow-y-scroll">
-              {tasks.map(function (object, i) {
-                return (
-                  <Task
-                    title="Create UI for Landing Page"
-                    dateAssigned="Jun 12"
-                    dateEnd="Oct 19"
-                    team="Design"
-                    state="InProgress"
-                  />
-                );
-              })}
-              <div
-                className={`flex h-full w-full cursor-default select-none flex-col items-center justify-center ${tasksEmpty ? "" : "hidden"}`}
-              >
-                <Folder className="h-24 w-24 text-dark-300" strokeWidth={0.5} />
-                <p className="text-base font-light text-dark-300">
-                  No active or iced tasks yet.
-                </p>
-                <p
-                  className="mb-24 mt-2 cursor-pointer text-base font-light text-indigo-500"
-                  onClick={handleCreateNewTask}
-                >
-                  Create a new task
-                </p>
-              </div>
-
-              {/* <div className="sticky left-0 top-0 flex h-14 w-full items-center justify-start bg-dark-800 px-12 py-4 ">
-                <CircleSlash className="mr-3 h-5 w-5 " />
-                In Progress
-                <Plus className="ml-auto h-6 w-6 " />
-              </div>
-              <div className="sticky left-0 top-0 flex w-full items-center justify-start bg-dark-800 px-12 py-4 ">
-                <Loader className="mr-3 h-5 w-5 " />
-                Assigned
-                <Plus className="ml-auto h-6 w-6 " />
-              </div>
-
-              <div className="sticky left-0 top-0 flex w-full items-center justify-start bg-dark-800 px-12 py-4 ">
-                <CircleDashed className="mr-3 h-5 w-5 " />
-                Pending Review
-                <Plus className="ml-auto h-6 w-6 " />
-              </div>
-
-              <div className="sticky left-0 top-0 flex w-full items-center justify-start bg-dark-800 px-12 py-4 ">
-                <Clock className="mr-3 h-5 w-5 " />
-                Overdue
-                <Plus className="ml-auto h-6 w-6 " />
-              </div>
-
-              <div className="sticky left-0 top-0 flex w-full items-center justify-start bg-dark-800 px-12 py-4 ">
-                <CircleCheck className="mr-3 h-5 w-5 " />
-                Completed
-                <Plus className="ml-auto h-6 w-6 " />
-              </div> */}
+              <ListTasks />
             </div>
           </div>
         </div>

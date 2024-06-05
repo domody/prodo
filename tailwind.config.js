@@ -23,7 +23,7 @@ module.exports = {
           950: "#000000", // Black
         },
         light: {
-          50: '#ffffff',  // White
+          50: '#fafafa',  // White
           100: '#f7f7f7',
           200: '#efefef',
           300: '#e7e7e7',

@@ -26,9 +26,20 @@ import {
   CircleCheck,
   Calendar,
   Dot,
+  Trash,
 } from "lucide-react";
+import DeleteTask from "./DeleteTask";
 
-const Task = ({ title, dateAssigned, dateEnd, team, state }) => {
+const Task = ({
+  title,
+  description,
+  dueDate,
+  priority,
+  status,
+  tags,
+  milestones,
+  id
+}) => {
   const [isOptionsVisible, setIsOptionsVisible] = useState(false);
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
@@ -38,41 +49,59 @@ const Task = ({ title, dateAssigned, dateEnd, team, state }) => {
     console.log("open");
   };
 
-  const handleClickOutside = (event) => {
-    console.log("asdasd");
-    if (
-      menuRef.current &&
-      !menuRef.current.contains(event.target) &&
-      !buttonRef.current.contains(event.target)
-    ) {
-      setIsOptionsVisible(false);
-    }
-  };
+  // const handleClickOutside = (event) => {
+  //   console.log("asdasd");
+  //   if (
+  //     menuRef.current &&
+  //     !menuRef.current.contains(event.target) &&
+  //     !buttonRef.current.contains(event.target)
+  //   ) {
+  //     setIsOptionsVisible(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    console.log("asasda");
-    if (isOptionsVisible) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOptionsVisible]);
+  // useEffect(() => {
+  //   console.log("asasda");
+  //   if (isOptionsVisible) {
+  //     document.addEventListener("mousedown", handleClickOutside);
+  //   } else {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   }
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, [isOptionsVisible]);
 
-  var InProgress = state === "InProgress";
-  var Assigned = state === "Assigned";
-  var PendingReview = state === "PendingReview";
-  var Overdue = state === "Overdue";
-  var Completed = state === "Completed";
+  // var InProgress = st === "InProgress";
+  // var Assigned = state === "Assigned";
+  // var PendingReview = state === "PendingReview";
+  // var Overdue = state === "Overdue";
+  // var Completed = state === "Completed";
 
   return (
     <div className="relative flex !h-14 w-full items-center justify-between border-b border-dark-500 px-12">
       <div
         id="taskOptionsMenu"
-        className={`absolute left-12 top-10 z-50 h-12 w-24 rounded-lg border border-dark-400 bg-dark-900 opacity-100 transition-all ${isOptionsVisible ? "" : "scale-50 !opacity-0"}`}
-      ></div>
+        className={`absolute select-none left-12 top-12 z-50 w-40 rounded-md border border-dark-500 bg-dark-900 p-1 text-sm opacity-100 transition-all ${isOptionsVisible ? "" : "scale-95 !opacity-0 pointer-events-none"}`}
+      >
+        <div className="flex items-center justify-start py-1.5 px-2 text-light-50">
+          Edit
+        </div>
+        <div className="flex items-center justify-start py-1.5 px-2 text-light-50">
+          Duplicate
+        </div>
+        <div className="flex items-center justify-start py-1.5 px-2 text-light-50">
+          Pin
+        </div>
+        <div className="-mx-1 my-1 bg-dark-500 h-px"></div>
+        <div className="flex items-center justify-start px-2 py-2 text-light-50">
+          Tags
+        </div>
+        <div className="-mx-1 my-1 bg-dark-500 h-px"></div>
+        <div className="flex items-center justify-start mt-1 text-light-50">
+          <DeleteTask id={id}/>
+        </div>
+      </div>
       <div className="flex h-full w-full items-center justify-start">
         <div
           className={`mr-2 flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg transition-all hover:bg-dark-700 ${isOptionsVisible ? "!cursor-default bg-dark-700" : ""}`}
@@ -82,10 +111,10 @@ const Task = ({ title, dateAssigned, dateEnd, team, state }) => {
           <Ellipsis className=" h-4 w-4" />
         </div>
 
-        <div className="w-24 bg-red-500">
+        <div className="w-24 text-left">
           <p className="line-clamp-1 max-w-full">TSK-109</p>
         </div>
-        <div className="w-[62.5%] bg-blue-500">
+        <div className="w-[62.5%] text-left">
           <p className="line-clamp-1 max-w-full">{title}</p>
         </div>
       </div>

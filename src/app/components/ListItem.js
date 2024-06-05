@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import db from "../../../lib/firestore";
+import db from "../lib/firestore";
 import { collection, onSnapshot } from "firebase/firestore";
 import DeleteItem from "./DeleteItem";
 
@@ -22,7 +22,7 @@ const ListItems = () => {
   }, []);
 
   return (
-    <div className="w-96 border p-4 text-center">
+    <div className="w-96 border p-4 min-h-96 text-center">
       <h2>List of Items</h2>
       <ul>
         {items.map((item) => (

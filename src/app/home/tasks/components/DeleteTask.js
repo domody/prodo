@@ -1,10 +1,10 @@
 // app/components/DeleteItem.js
-import db from "../lib/firestore";
+import db from "../../../lib/firestore";
 import { doc, deleteDoc } from "firebase/firestore";
 
 const DeleteItem = ({ id }) => {
   const handleDelete = async () => {
-    const itemRef = doc(db, "items", id);
+    const itemRef = doc(db, "tasks", id);
     try {
       await deleteDoc(itemRef);
       //alert("Item deleted successfully"); annoying
@@ -17,9 +17,9 @@ const DeleteItem = ({ id }) => {
   return (
     <button
       onClick={handleDelete}
-      className="rounded border bg-red-400 p-1 text-white"
+      className="rounded-md w-full h-full flex justify-start items-center cursor-pointer py-1.5 px-2 hover:bg-dark-500 transition-all"
     >
-      Delete Item
+      Delete
     </button>
   );
 };
