@@ -7,7 +7,7 @@ const DeleteItem = ({ id }) => {
     const itemRef = doc(db, "items", id);
     try {
       await deleteDoc(itemRef);
-      alert("Item deleted successfully");
+      //alert("Item deleted successfully"); annoying
     } catch (error) {
       console.error("Error deleting document: ", error);
       alert("Error deleting item");

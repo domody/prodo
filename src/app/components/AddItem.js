@@ -10,7 +10,8 @@ const AddItem = () => {
     event.preventDefault();
     try {
       const docRef = await addDoc(collection(db, "items"), {
-        name: value,
+        name: value.split(",")[0],
+        milestones: parseInt(value.split(",")[1]),
       });
       console.log("Document written with ID: ", docRef.id);
       setValue(""); // Clear the form
@@ -26,7 +27,7 @@ const AddItem = () => {
         className="text-dark-800"
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        placeholder="Add a new item"
+        placeholder="Add task (e.g 'Lol,3')"
       />
       <button type="submit">Add Item</button>
     </form>

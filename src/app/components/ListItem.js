@@ -27,7 +27,9 @@ const ListItems = () => {
       <ul>
         {items.map((item) => (
           <li key={item.id} className="border-t-2 p-2">
-            <p>{item.name}</p>
+            <p>
+              {item.name},{item.milestones}
+            </p>
             <DeleteItem id={item.id} />
           </li>
         ))}
