@@ -41,14 +41,18 @@
 "use client";
 
 import AddItem from "./components/AddItem";
-import ListItems from "./components/ListItem"
+import ListItems from "./components/ListItem";
 
 export default function Home() {
   return (
-    <div>
-      <h1>Welcome to My Next.js App</h1>
-      <AddItem />
-      <ListItems />
+    <div className="flex h-screen container w-screen items-center justify-center">
+      <div className="flex w-1/2 flex-col items-center justify-center space-y-4">
+        <h1>Welcome to My Next.js App</h1>
+        <AddItem />
+      </div>
+      <div className="flex w-1/2 flex-col items-center justify-center space-y-4">
+        <ListItems />
+      </div>
     </div>
   );
 }

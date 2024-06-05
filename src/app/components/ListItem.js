@@ -27,9 +27,13 @@ const ListItems = () => {
       <ul>
         {items.map((item) => (
           <li key={item.id} className="border-t-2 p-2">
-            <p>
-              {item.name},{item.milestones}
-            </p>
+            <p>Name: {item.name}</p>
+            <p>Description: {item.description}</p>
+            <p>Due Date: {item.dueDate}</p>
+            <p>Priority: {item.priority}</p>
+            <p>Type: {item.status}</p>
+            <p>Tags: {item.tags}</p>
+            <p>Milestones: {item.milestone}</p>
             <DeleteItem id={item.id} />
           </li>
         ))}
