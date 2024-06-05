@@ -2,6 +2,7 @@
 import { useState } from "react";
 import db from "../lib/firestore";
 import { collection, addDoc } from "firebase/firestore";
+import Task from "../models/task";
 
 const AddItem = () => {
   const [title, setTitle] = useState("");
@@ -10,23 +11,22 @@ const AddItem = () => {
   const [priority, setPriority] = useState("");
   const [status, setStatus] = useState("");
   const [tags, setTags] = useState("");
-  const [milestonesCount, setMilestonesCount] = useState("");
+  const [milestones, setMilestones] = useState("");
 
   const handleSubmit = async (event) => {
-    console.log('Status:' . status)
+    console.log("Status:".status);
     event.preventDefault();
     try {
-      const docRef = await addDoc(collection(db, "items"), {
-        name: title,
-        description: description,
-        dueDate: dueDate,
-        priority: priority,
-        status: status ? status : "Not Started",
-        tags: tags,
-        milestonesCount: milestonesCount,
-        currentMilestone: 0,
-      });
-      console.log("Document written with ID: ", docRef.id);
+      const task = new Task(
+        title,
+        description,
+        dueDate,
+        parseInt(priority),
+        status,
+        tags.split(","),
+        parseInt(milestones),
+      );
+      await Task.createTask(task);
       // Clear the form
       setTitle("");
       setDescription("");
@@ -34,7 +34,7 @@ const AddItem = () => {
       setPriority("");
       setStatus("");
       setTags("");
-      setMilestone("");
+      setMilestones("");
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -90,8 +90,8 @@ const AddItem = () => {
       <input
         type="text"
         className="px-2 text-dark-800"
-        value={milestonesCount}
-        onChange={(e) => setMilestonesCount(e.target.value)}
+        value={milestones}
+        onChange={(e) => setMilestones(e.target.value)}
         placeholder="Milestones Amount"
       />
       <button type="submit" className="rounded-lg bg-slate-800 p-2">

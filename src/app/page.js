@@ -40,17 +40,17 @@
 
 "use client";
 
-import AddItem from "./components/AddItem";
-import ListItems from "./components/ListItem";
+import AddTask from "./components/AddTask";
+import ListTasks from "./components/ListTasks";
 
 export default function Home() {
   return (
-    <div className="flex h-screen container w-screen items-center justify-center">
+    <div className="container flex h-screen w-screen items-center justify-center">
       <div className="flex w-1/2 flex-col items-center justify-center space-y-4">
-        <AddItem />
+        <AddTask />
       </div>
       <div className="flex w-1/2 flex-col items-center justify-center space-y-4">
-        <ListItems />
+        <ListTasks />
       </div>
     </div>
   );
