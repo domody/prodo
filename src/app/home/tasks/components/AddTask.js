@@ -6,9 +6,6 @@ import {
   CircleSlash,
   Calendar,
   AlertCircle,
-  ChevronUp,
-  Minus,
-  ChevronDown,
 } from "lucide-react";
 import { Circle } from "react-feather";
 
@@ -139,12 +136,12 @@ const AddTask = ({ visible, setVisibility }) => {
             /> */}
           </div>
           <div className="flex w-full items-center justify-between text-sm font-medium">
-            <button
-              // type="submit"
-              className="rounded-lg px-4 py-2 text-light-50 transition-all hover:bg-dark-500"
+            <div
+              onClick={toggleVisibility}
+              className="rounded-lg px-4 py-2 text-light-50 transition-all cursor-pointer hover:bg-dark-500"
             >
               Cancel
-            </button>
+            </div>
             <button
               type="submit"
               className="rounded-lg bg-light-50 px-4 py-2 text-dark-900"

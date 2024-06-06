@@ -16,18 +16,12 @@ FULL CAPS LOOKS COOL
 
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import {
-  Ellipsis,
-  Plus,
-  Loader,
-  CircleDashed,
-  CircleSlash,
-  Clock,
-  CircleCheck,
-  Calendar,
-  Dot,
-  Trash,
-} from "lucide-react";
+import { Ellipsis } from "lucide-react";
+
+import EditTask from "./EditTask";
+import DuplicateTask from "./DuplicateTask";
+import PinTask from "./PinTask";
+import EditTags from "./EditTags";
 import DeleteTask from "./DeleteTask";
 
 const TaskItem = ({
@@ -38,7 +32,7 @@ const TaskItem = ({
   status,
   tags,
   milestones,
-  id
+  id,
 }) => {
   const [isOptionsVisible, setIsOptionsVisible] = useState(false);
   const menuRef = useRef(null);
@@ -70,24 +64,24 @@ const TaskItem = ({
     <div className="relative flex !h-14 w-full items-center justify-between border-b border-dark-500 px-12">
       <div
         id="taskOptionsMenu"
-        className={`absolute select-none left-12 top-12 z-50 w-40 rounded-md border border-dark-500 bg-dark-900 p-1 text-sm opacity-100 transition-all ${isOptionsVisible ? "" : "scale-95 !opacity-0 pointer-events-none"}`}
+        className={`absolute left-12 top-12 z-50 w-40 select-none rounded-md border border-dark-500 bg-dark-900 p-1 text-sm opacity-100 transition-all ${isOptionsVisible ? "" : "pointer-events-none scale-95 !opacity-0"}`}
       >
-        <div className="flex items-center justify-start py-1.5 px-2 text-light-50">
-          Edit
+        <div className="flex h-full w-full items-center justify-start">
+          <EditTask id={id} />
         </div>
-        <div className="flex items-center justify-start py-1.5 px-2 text-light-50">
-          Duplicate
+        <div className="flex h-full w-full items-center justify-start">
+          <DuplicateTask id={id} />
         </div>
-        <div className="flex items-center justify-start py-1.5 px-2 text-light-50">
-          Pin
+        <div className="flex h-full w-full items-center justify-start">
+          <PinTask id={id} />
         </div>
-        <div className="-mx-1 my-1 bg-dark-500 h-px"></div>
-        <div className="flex items-center justify-start px-2 py-2 text-light-50">
-          Tags
+        <div className="-mx-1 my-1 h-px bg-dark-500"></div>
+        <div className="flex h-full w-full items-center justify-start">
+          <EditTags id={id} />
         </div>
-        <div className="-mx-1 my-1 bg-dark-500 h-px"></div>
-        <div className="flex items-center justify-start mt-1 text-light-50">
-          <DeleteTask id={id}/>
+        <div className="-mx-1 my-1 h-px bg-dark-500"></div>
+        <div className="mt-1 flex items-center justify-start text-light-50">
+          <DeleteTask id={id} />
         </div>
       </div>
       <div className="flex h-full w-full items-center justify-start">

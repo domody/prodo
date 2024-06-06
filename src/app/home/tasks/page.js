@@ -111,7 +111,7 @@ export default function Home() {
             >
               <div className="flex items-center justify-start">
                 <Search className="mr-2 h-4 w-4 text-dark-300" />
-                <div className="ml-2 flex cursor-pointer items-center justify-center rounded-md border border-dashed border-[#2F2F2F] py-1 pl-2 pr-2.5 text-sm  transition-all hover:text-dark-50">
+                <div className="ml-2 flex cursor-pointer items-center justify-center rounded-md border border-dashed border-[#2F2F2F] py-1 pl-2 pr-2.5 text-sm  transition-all">
                   <Plus className="mr-1.5 h-3 w-3" />
                   Filters
                 </div>
