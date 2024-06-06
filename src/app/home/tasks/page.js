@@ -32,32 +32,21 @@ import {
   Folder,
   ChevronDown,
 } from "lucide-react";
-// import Task from "./components/Task";
-import AddItem from "@/app/components/AddItem";
+
 import AddTask from "./components/AddTask";
 import ListTasks from "./components/ListTasks";
 
 export default function Home() {
-  // Alter length of tasks variable to alter how many tasks appear, i.e [1, 2, 3, etc]
-  const [tasks, setTasks] = useState([]);
-  const tasksEmpty = tasks.length === 0;
-
-  // const handleCreateNewTask = () => {
-  //   setTasks([...tasks, tasks.length + 1]);
-  // };
-
-  const [visiblity, setVisibility] = useState(false)
+  const [visiblity, setVisibility] = useState(false);
 
   const toggleAddTask = () => {
-    setVisibility(true)
-  }
-
-
+    setVisibility(true);
+  };
 
   return (
     <main className="flex h-screen w-screen items-start justify-start !overflow-hidden text-balance bg-dark-900">
       <SkinnySidebar />
-      <AddTask visible={visiblity} setVisibility={setVisibility}/>
+      <AddTask visible={visiblity} setVisibility={setVisibility} />
       <div className="flex h-screen w-96 flex-col items-start justify-start border-r border-dark-500">
         <div className="h-20 w-full border-b border-dark-500"></div>
         <div className="h-[calc(100vw - 5rem)] flex w-full flex-col items-start justify-start px-6 py-4">
@@ -127,11 +116,13 @@ export default function Home() {
                   Filters
                 </div>
               </div>
-              <Plus className="ml-auto h-5 w-5 text-dark-200 cursor-pointer"
-              onClick={toggleAddTask} />
+              <Plus
+                className="ml-auto h-5 w-5 cursor-pointer text-dark-200"
+                onClick={toggleAddTask}
+              />
             </div>
             <div className="scrollbar-hidden h-full w-full overflow-x-hidden overflow-y-scroll">
-              <ListTasks />
+              <ListTasks toggleAddTask={toggleAddTask} />
             </div>
           </div>
         </div>

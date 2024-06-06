@@ -30,7 +30,7 @@ import {
 } from "lucide-react";
 import DeleteTask from "./DeleteTask";
 
-const Task = ({
+const TaskItem = ({
   title,
   description,
   dueDate,
@@ -60,19 +60,7 @@ const Task = ({
   //   }
   // };
 
-  // useEffect(() => {
-  //   console.log("asasda");
-  //   if (isOptionsVisible) {
-  //     document.addEventListener("mousedown", handleClickOutside);
-  //   } else {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   }
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, [isOptionsVisible]);
-
-  // var InProgress = st === "InProgress";
+  // var InProgress = state === "InProgress";
   // var Assigned = state === "Assigned";
   // var PendingReview = state === "PendingReview";
   // var Overdue = state === "Overdue";
@@ -122,7 +110,7 @@ const Task = ({
   );
 };
 
-export default Task;
+export default TaskItem;
 
 {
   /* <CircleSlash

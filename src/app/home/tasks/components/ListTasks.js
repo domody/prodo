@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import db from "../../../lib/firestore";
+import { Folder } from "lucide-react";
+import db from "../../../../lib/firestore";
 import { collection, onSnapshot } from "firebase/firestore";
-// import DeleteItem from "./DeleteItem";
-import Task from "./task";
+import TaskItem from "./TaskItem";
 
-const ListTasks = () => {
+const ListTasks = ({ toggleAddTask }) => {
   const [tasks, setTasks] = useState([]);
+  // const [tasksEmpty, setTasksEmpty] = useState(true);
+  const tasksEmpty = tasks.length === 0
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "tasks"), (snapshot) => {
@@ -22,11 +24,41 @@ const ListTasks = () => {
     return () => unsubscribe();
   }, []);
 
+  // Check if tasks are empty whenever tasks state changes
+  // useEffect(() => {
+  //   setTasksEmpty(tasks.length === 0);
+  // }, [tasks]);
+
   return (
-    <div className="h-full w-full text-center">
+    <div className="h-full w-full">
       {tasks.map((task) => (
-        <Task title={task.name} description={task.description} dueDate={task.dueDate} priority={task.priority} status={task.status} tags={task.tags} milestones={task.milestonesCount} id={task.id}/>
+        <TaskItem
+          title={task.title}
+          description={task.description}
+          dueDate={task.dueDate}
+          priority={task.priority}
+          status={task.status}
+          tags={task.tags}
+          milestones={task.milestonesCount}
+          key={task.id}
+          id={task.id}
+        />
       ))}
+
+      <div
+        className={`flex h-full w-full cursor-default select-none flex-col items-center justify-center ${tasksEmpty ? "" : "hidden"}`}
+      >
+        <Folder className="h-24 w-24 text-dark-300" strokeWidth={0.5} />
+        <p className="text-base font-light text-dark-300">
+          No active or iced tasks yet.
+        </p>
+        <p
+          className="mb-24 mt-2 cursor-pointer text-base font-light text-indigo-500"
+          onClick={toggleAddTask}
+        >
+          Create a new task
+        </p>
+      </div>
     </div>
   );
 };
@@ -44,20 +76,6 @@ export default ListTasks;
 //       />
 //     );
 //   })}
-//   <div
-//     className={`flex h-full w-full cursor-default select-none flex-col items-center justify-center ${tasksEmpty ? "" : "hidden"}`}
-//   >
-//     <Folder className="h-24 w-24 text-dark-300" strokeWidth={0.5} />
-//     <p className="text-base font-light text-dark-300">
-//       No active or iced tasks yet.
-//     </p>
-//     <p
-//       className="mb-24 mt-2 cursor-pointer text-base font-light text-indigo-500"
-//       onClick={handleCreateNewTask}
-//     >
-//       Create a new task
-//     </p>
-//   </div>
 
 {
   /* <div className="sticky left-0 top-0 flex h-14 w-full items-center justify-start bg-dark-800 px-12 py-4 ">

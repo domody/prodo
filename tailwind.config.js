@@ -19,7 +19,7 @@ module.exports = {
           600: "#292929",
           700: "#1f1f1f",
           800: "#141414",
-          900: "#09090b", // Almost Black
+          900: "#090909", // Almost Black
           950: "#000000", // Black
         },
         light: {
