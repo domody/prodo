@@ -1,15 +1,9 @@
 import { useState } from "react";
 import Task from "../../../../models/task";
-import {
-  X,
-  Tag,
-  CircleSlash,
-  Calendar,
-  AlertCircle,
-} from "lucide-react";
+import { X, Tag, CircleSlash, Calendar, AlertCircle, Info } from "lucide-react";
 import { Circle } from "react-feather";
 
-const AddTask = ({ visible, setVisibility }) => {
+const AddTask = ({ visible, setCreateTaskVisibility }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
@@ -19,7 +13,7 @@ const AddTask = ({ visible, setVisibility }) => {
   const [milestonesCount, setMilestonesCount] = useState("");
 
   const toggleVisibility = () => {
-    setVisibility(!visible);
+    setCreateTaskVisibility(!visible);
   };
 
   const handleSubmit = async (event) => {
@@ -61,14 +55,31 @@ const AddTask = ({ visible, setVisibility }) => {
       >
         <div className="flex h-full w-full items-center justify-between">
           <div className="flex max-w-[30rem] flex-col items-start justify-start">
-            <h1 className="text-base font-semibold">Create new Task</h1>
+            <h1 className="font-semibold">Create new Task</h1>
             <p className="mt-1 text-sm text-dark-300">
-              Sub text can go here maybe, dk if it is rlly worth it tho
+              Fill in the inputs to create a new task.
             </p>
           </div>
           <div className="flex h-12 items-start justify-center">
             <X className="h-5 w-5 cursor-pointer" onClick={toggleVisibility} />
           </div>
+        </div>
+        <div className="flex w-full items-center justify-start space-x-4 text-light-500">
+          <button className="flex items-center justify-center rounded-lg border border-dark-500 bg-dark-800 px-3 py-1.5">
+            <Info className="mr-1.5 h-4 w-4" /> Info
+          </button>
+          <button className="flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5">
+            <CircleSlash className="mr-1.5 h-4 w-4" /> Status
+          </button>
+          <button className="flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5">
+            <Calendar className="mr-1.5 h-4 w-4" /> Due Date
+          </button>
+          <button className="flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5">
+            <AlertCircle className="mr-1.5 h-4 w-4" /> Priority
+          </button>
+          <button className="flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5">
+            <Tag className="mr-1.5 h-4 w-4" /> Tags
+          </button>
         </div>
         <form
           onSubmit={handleSubmit}
@@ -90,22 +101,7 @@ const AddTask = ({ visible, setVisibility }) => {
             placeholder="Description"
             resiz
           />
-          <div className="flex w-full items-center justify-start space-x-4 text-light-500">
-            <button className="flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5">
-              <CircleSlash className="mr-1.5 h-4 w-4" /> Status
-            </button>
-            <button className="flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5">
-              <Calendar className="mr-1.5 h-4 w-4" /> Due Date
-            </button>
-            <button className="flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5">
-              <AlertCircle className="mr-1.5 h-4 w-4" />{" "}
-              Priority
-            </button>
-            <button className="flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5">
-              <Tag className="mr-1.5 h-4 w-4" /> Tags
-            </button>
-
-            {/* <input
+          {/* <input
               type="date"
               className="h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 placeholder:text-dark-400"
               value={dueDate}
@@ -134,11 +130,11 @@ const AddTask = ({ visible, setVisibility }) => {
               onChange={(e) => setMilestonesCount(e.target.value)}
               placeholder="Milestones Amount"
             /> */}
-          </div>
+
           <div className="flex w-full items-center justify-between text-sm font-medium">
             <div
               onClick={toggleVisibility}
-              className="rounded-lg px-4 py-2 text-light-50 transition-all cursor-pointer hover:bg-dark-500"
+              className="cursor-pointer rounded-lg px-4 py-2 text-light-50 transition-all hover:bg-dark-500"
             >
               Cancel
             </div>

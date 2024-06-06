@@ -36,17 +36,32 @@ import {
 import AddTask from "./components/AddTask";
 import ListTasks from "./components/ListTasks";
 
+import DeleteTask from "./components/DeleteTask";
+
 export default function Home() {
-  const [visiblity, setVisibility] = useState(false);
+  const [createTaskVisiblity, setCreateTaskVisibility] = useState(false);
+  const [deleteTaskVisibility, setDeleteTaskVisibility] = useState(false);
 
   const toggleAddTask = () => {
-    setVisibility(true);
+    setCreateTaskVisibility(true);
+  };
+
+  const toggleDeleteTask = () => {
+    setDeleteTaskVisibility(true);
   };
 
   return (
     <main className="flex h-screen w-screen items-start justify-start !overflow-hidden text-balance bg-dark-900">
       <SkinnySidebar />
-      <AddTask visible={visiblity} setVisibility={setVisibility} />
+      <AddTask
+        visible={createTaskVisiblity}
+        setCreateTaskVisibility={setCreateTaskVisibility}
+      />
+      <DeleteTask
+        id={2}
+        visible={deleteTaskVisibility}
+        setDeleteTaskVisibility={setDeleteTaskVisibility}
+      />
       <div className="flex h-screen w-96 flex-col items-start justify-start border-r border-dark-500">
         <div className="h-20 w-full border-b border-dark-500"></div>
         <div className="h-[calc(100vw - 5rem)] flex w-full flex-col items-start justify-start px-6 py-4">
@@ -56,13 +71,13 @@ export default function Home() {
               <li>
                 <a
                   href=""
-                  className="flex items-center justify-start text-sm font-semibold"
+                  className="flex items-center justify-start text-sm font-semibold rounded-lg hover:bg-dark-500 p-2 transition-all"
                 >
                   <HomeIcon className="mr-3 h-5 w-5 " /> Home
                 </a>
               </li>
 
-              <li>
+              {/* <li>
                 <a
                   href="/home/tasks/team"
                   className="flex items-center justify-start text-sm font-semibold"
@@ -97,7 +112,7 @@ export default function Home() {
                   <Folder className="mr-3 h-5 w-5 text-pink-500" /> HR
                   <ChevronDown className="ml-auto h-5 w-5" />
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>
@@ -122,7 +137,7 @@ export default function Home() {
               />
             </div>
             <div className="scrollbar-hidden h-full w-full overflow-x-hidden overflow-y-scroll">
-              <ListTasks toggleAddTask={toggleAddTask} />
+              <ListTasks toggleAddTask={toggleAddTask} toggleDeleteTask={toggleDeleteTask}/>
             </div>
           </div>
         </div>
