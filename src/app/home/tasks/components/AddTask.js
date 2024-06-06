@@ -1,6 +1,16 @@
 import { useState } from "react";
 import Task from "../../../../models/task";
-import { X } from "lucide-react";
+import {
+  X,
+  Tag,
+  CircleSlash,
+  Calendar,
+  AlertCircle,
+  ChevronUp,
+  Minus,
+  ChevronDown,
+} from "lucide-react";
+import { Circle } from "react-feather";
 
 const AddTask = ({ visible, setVisibility }) => {
   const [title, setTitle] = useState("");
@@ -50,13 +60,23 @@ const AddTask = ({ visible, setVisibility }) => {
       className={`absolute left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black/25 transition-all ${visible ? "" : "pointer-events-none opacity-0"}`}
     >
       <div
-        className={`flex w-[36rem] flex-col items-center justify-center space-y-4 rounded-xl border border-dark-500 bg-dark-900 p-4`}
+        className={`flex w-[52rem] flex-col items-center justify-center space-y-4 rounded-xl border border-dark-500 bg-dark-900 p-6`}
       >
-        <div className="flex w-full items-center justify-between">
-          <h1 className="text-base font-semibold">Create new Task</h1>
-          <X className="h-5 w-5 cursor-pointer" onClick={toggleVisibility}/>
+        <div className="flex h-full w-full items-center justify-between">
+          <div className="flex max-w-[30rem] flex-col items-start justify-start">
+            <h1 className="text-base font-semibold">Create new Task</h1>
+            <p className="mt-1 text-sm text-dark-300">
+              Sub text can go here maybe, dk if it is rlly worth it tho
+            </p>
+          </div>
+          <div className="flex h-12 items-start justify-center">
+            <X className="h-5 w-5 cursor-pointer" onClick={toggleVisibility} />
+          </div>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form
+          onSubmit={handleSubmit}
+          className="w-full space-y-4 text-sm placeholder:text-sm"
+        >
           <input
             type="text"
             className="h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 placeholder:text-dark-400"
@@ -65,52 +85,63 @@ const AddTask = ({ visible, setVisibility }) => {
             placeholder="Name"
             required
           />
-          <input
+          <textarea
             type="text"
-            className="h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 placeholder:text-dark-400"
+            className="h-36 max-h-96 min-h-24 w-full rounded-lg border border-dark-500 bg-transparent px-2 py-4 text-light-50 placeholder:text-dark-400"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Description"
+            resiz
           />
-          <input
-            type="text"
-            className="h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 placeholder:text-dark-400"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-            placeholder="Due date"
-          />
-          <input
-            type="number"
-            className="h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 placeholder:text-dark-400"
-            value={priority}
-            onChange={(e) => setPriority(e.target.value)}
-            placeholder="Priority (1, 2, 3)"
-          />
-          <input
-            type="text"
-            className="h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 placeholder:text-dark-400"
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-            placeholder="Status"
-          />
-          <input
-            type="text"
-            className="h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 placeholder:text-dark-400"
-            value={tags}
-            onChange={(e) => setTags(e.target.value)}
-            placeholder="Tags"
-          />
-          <input
-            type="text"
-            className="h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 placeholder:text-dark-400"
-            value={milestonesCount}
-            onChange={(e) => setMilestonesCount(e.target.value)}
-            placeholder="Milestones Amount"
-          />
-          <div className="flex w-full items-center justify-between font-medium text-sm">
+          <div className="flex w-full items-center justify-start space-x-4 text-light-500">
+            <button className="flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5">
+              <CircleSlash className="mr-1.5 h-4 w-4" /> Status
+            </button>
+            <button className="flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5">
+              <Calendar className="mr-1.5 h-4 w-4" /> Due Date
+            </button>
+            <button className="flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5">
+              <AlertCircle className="mr-1.5 h-4 w-4" />{" "}
+              Priority
+            </button>
+            <button className="flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5">
+              <Tag className="mr-1.5 h-4 w-4" /> Tags
+            </button>
+
+            {/* <input
+              type="date"
+              className="h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 placeholder:text-dark-400"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+              placeholder="Due date"
+            />
+            <input
+              type="number"
+              className="h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 placeholder:text-dark-400"
+              value={priority}
+              onChange={(e) => setPriority(e.target.value)}
+              placeholder="Priority (1, 2, 3)"
+            />
+
+            <input
+              type="text"
+              className="h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 placeholder:text-dark-400"
+              value={tags}
+              onChange={(e) => setTags(e.target.value)}
+              placeholder="Tags"
+            />
+            <input
+              type="text"
+              className="h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 placeholder:text-dark-400"
+              value={milestonesCount}
+              onChange={(e) => setMilestonesCount(e.target.value)}
+              placeholder="Milestones Amount"
+            /> */}
+          </div>
+          <div className="flex w-full items-center justify-between text-sm font-medium">
             <button
               // type="submit"
-              className="rounded-lg text-light-50 px-4 py-2 hover:bg-dark-500 transition-all"
+              className="rounded-lg px-4 py-2 text-light-50 transition-all hover:bg-dark-500"
             >
               Cancel
             </button>
