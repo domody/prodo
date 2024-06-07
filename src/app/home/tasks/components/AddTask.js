@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Task from "../../../../models/task";
-import { X, Tag, CircleSlash, Calendar, AlertCircle, Info } from "lucide-react";
+import { X, Tag, CircleSlash, CalendarIcon, AlertCircle, Info } from "lucide-react";
 import { Circle } from "react-feather";
+import Calendar from "./Calendar";
 
 const AddTask = ({ visible, setCreateTaskVisibility }) => {
   const [title, setTitle] = useState("");
@@ -100,7 +101,7 @@ const AddTask = ({ visible, setCreateTaskVisibility }) => {
             className={`flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5 border ${dueDatePageActive ? "border-dark-500" : "border-dark-800"}`}
             onClick={() => changeSubPage("DueDate")}
           >
-            <Calendar className="mr-1.5 h-4 w-4" /> Due Date
+            <CalendarIcon className="mr-1.5 h-4 w-4" /> Due Date
           </button>
           <button
             className={`flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5 border ${priorityPageActive ? "border-dark-500" : "border-dark-800"}`}
@@ -156,15 +157,15 @@ const AddTask = ({ visible, setCreateTaskVisibility }) => {
           </div>
           <div className={`flex justify-start items-start space-x-4 mb-2 ${dueDatePageActive ? "" : "hidden"}`}>
 
-            <input
+            {/* <input
               type="date"
               className={`h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 placeholder:text-dark-400 transition-all ${dueDatePageActive ? "" : "hidden"}`}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Name"
               required
-            />
-
+            /> */}
+            <Calendar />
           </div>
           <div className="flex w-full items-center justify-between text-sm font-medium">
             <div
