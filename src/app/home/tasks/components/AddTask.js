@@ -46,12 +46,24 @@ const AddTask = ({ visible, setCreateTaskVisibility }) => {
     toggleVisibility();
   };
 
+  const [activeSubPage, setActiveSubPage] = useState("Info");
+
+  var infoPageActive = activeSubPage === "Info";
+  var statusPageActive = activeSubPage === "Status";
+  var dueDatePageActive = activeSubPage === "DueDate";
+  var priorityPageActive = activeSubPage === "Priority";
+  var tagsPageActive = activeSubPage === "Tags";
+
+  const changeSubPage = (page) => {
+    setActiveSubPage(page);
+  };
+
   return (
     <div
       className={`absolute left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black/25 transition-all ${visible ? "" : "pointer-events-none opacity-0"}`}
     >
       <div
-        className={`flex w-[52rem] flex-col items-center justify-center space-y-4 rounded-xl border border-dark-500 bg-dark-900 p-6`}
+        className={`flex w-[52rem] flex-col items-center justify-center space-y-4 rounded-xl border border-dark-500 bg-dark-900 p-6 transition-all ${visible ? "mb-0" : "mb-32"}`}
       >
         <div className="flex h-full w-full items-center justify-between">
           <div className="flex max-w-[30rem] flex-col items-start justify-start">
@@ -65,19 +77,34 @@ const AddTask = ({ visible, setCreateTaskVisibility }) => {
           </div>
         </div>
         <div className="flex w-full items-center justify-start space-x-4 text-light-500">
-          <button className="flex items-center justify-center rounded-lg border border-dark-500 bg-dark-800 px-3 py-1.5">
+          <button
+            className={`flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5 ${infoPageActive ? "border border-dark-500" : ""}`}
+            onClick={() => changeSubPage("Info")}
+          >
             <Info className="mr-1.5 h-4 w-4" /> Info
           </button>
-          <button className="flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5">
+          <button
+            className={`flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5 ${statusPageActive ? "border border-dark-500" : ""}`}
+            onClick={() => changeSubPage("Status")}
+          >
             <CircleSlash className="mr-1.5 h-4 w-4" /> Status
           </button>
-          <button className="flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5">
+          <button
+            className={`flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5 ${dueDatePageActive ? "border border-dark-500" : ""}`}
+            onClick={() => changeSubPage("DueDate")}
+          >
             <Calendar className="mr-1.5 h-4 w-4" /> Due Date
           </button>
-          <button className="flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5">
+          <button
+            className={`flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5 ${priorityPageActive ? "border border-dark-500" : ""}`}
+            onClick={() => changeSubPage("Priority")}
+          >
             <AlertCircle className="mr-1.5 h-4 w-4" /> Priority
           </button>
-          <button className="flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5">
+          <button
+            className={`flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5 ${tagsPageActive ? "border border-dark-500" : ""}`}
+            onClick={() => changeSubPage("Tags")}
+          >
             <Tag className="mr-1.5 h-4 w-4" /> Tags
           </button>
         </div>

@@ -42,13 +42,17 @@ export default function Home() {
   const [createTaskVisiblity, setCreateTaskVisibility] = useState(false);
   const [deleteTaskVisibility, setDeleteTaskVisibility] = useState(false);
 
+  const [deleteID, setDeleteID] = useState("");
+
   const toggleAddTask = () => {
     setCreateTaskVisibility(true);
   };
 
-  const toggleDeleteTask = () => {
+  const toggleDeleteTask = (id) => {
     setDeleteTaskVisibility(true);
+    setDeleteID(id);
   };
+
 
   return (
     <main className="flex h-screen w-screen items-start justify-start !overflow-hidden text-balance bg-dark-900">
@@ -58,20 +62,20 @@ export default function Home() {
         setCreateTaskVisibility={setCreateTaskVisibility}
       />
       <DeleteTask
-        id={2}
+        id={deleteID}
         visible={deleteTaskVisibility}
         setDeleteTaskVisibility={setDeleteTaskVisibility}
       />
       <div className="flex h-screen w-96 flex-col items-start justify-start border-r border-dark-500">
         <div className="h-20 w-full border-b border-dark-500"></div>
-        <div className="h-[calc(100vw - 5rem)] flex w-full flex-col items-start justify-start px-6 py-4">
+        <div className="h-[calc(100vw - 5rem)] flex w-full flex-col items-start justify-start px-4 py-4">
           {/* <h1 className="text-lg font-medium ">Tasks</h1> */}
           <div className="mt-4 w-full text-sm ">
             <ul className="w-full space-y-4">
               <li>
                 <a
                   href=""
-                  className="flex items-center justify-start text-sm font-semibold rounded-lg hover:bg-dark-500 p-2 transition-all"
+                  className="flex items-center justify-start rounded-lg p-2 text-sm font-semibold transition-all hover:bg-dark-500"
                 >
                   <HomeIcon className="mr-3 h-5 w-5 " /> Home
                 </a>
@@ -137,7 +141,10 @@ export default function Home() {
               />
             </div>
             <div className="scrollbar-hidden h-full w-full overflow-x-hidden overflow-y-scroll">
-              <ListTasks toggleAddTask={toggleAddTask} toggleDeleteTask={toggleDeleteTask}/>
+              <ListTasks
+                toggleAddTask={toggleAddTask}
+                toggleDeleteTask={toggleDeleteTask}
+              />
             </div>
           </div>
         </div>

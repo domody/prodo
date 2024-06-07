@@ -9,7 +9,7 @@ import TaskItem from "./TaskItem";
 const ListTasks = ({ toggleAddTask, toggleDeleteTask }) => {
   const [tasks, setTasks] = useState([]);
   // const [tasksEmpty, setTasksEmpty] = useState(true);
-  const tasksEmpty = tasks.length === 0
+  const tasksEmpty = tasks.length === 0;
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "tasks"), (snapshot) => {

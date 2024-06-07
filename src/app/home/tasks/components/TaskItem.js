@@ -42,16 +42,26 @@ const TaskItem = ({
     setIsOptionsVisible(!isOptionsVisible);
   };
 
-  // const handleClickOutside = (event) => {
-  //   console.log("asdasd");
-  //   if (
-  //     menuRef.current &&
-  //     !menuRef.current.contains(event.target) &&
-  //     !buttonRef.current.contains(event.target)
-  //   ) {
-  //     setIsOptionsVisible(false);
-  //   }
-  // };
+  const handleClickOutside = (event) => {
+    if (
+      menuRef.current &&
+      !menuRef.current.contains(event.target) &&
+      !buttonRef.current.contains(event.target)
+    ) {
+      setIsOptionsVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isOptionsVisible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOptionsVisible]);
 
   // var InProgress = state === "InProgress";
   // var Assigned = state === "Assigned";
@@ -63,16 +73,25 @@ const TaskItem = ({
     <>
       <div className="relative flex !h-14 w-full items-center justify-between border-b border-dark-500 px-12">
         <div
-          id="taskOptionsMenu"
-          className={`absolute left-12 top-12 z-50 w-40 select-none rounded-md border border-dark-500 bg-dark-900 p-1 text-sm opacity-100 transition-all ${isOptionsVisible ? "" : "pointer-events-none scale-95 !opacity-0"}`}
+          ref={menuRef}
+          className={`absolute left-12 z-50 w-40 select-none rounded-md border border-dark-500 bg-dark-900 p-1 text-sm opacity-100 transition-all ${isOptionsVisible ? "top-12" : "pointer-events-none scale-90 !opacity-0 z-0 top-8"}`}
         >
-          <div className="flex h-full w-full items-center justify-start">
+          <div
+            className="flex h-full w-full items-center justify-start"
+            onClick={handleClick}
+          >
             <EditTask id={id} />
           </div>
-          <div className="flex h-full w-full items-center justify-start">
+          <div
+            className="flex h-full w-full items-center justify-start"
+            onClick={handleClick}
+          >
             <DuplicateTask id={id} />
           </div>
-          <div className="flex h-full w-full items-center justify-start">
+          <div
+            className="flex h-full w-full items-center justify-start"
+            onClick={handleClick}
+          >
             <PinTask id={id} />
           </div>
           <div className="-mx-1 my-1 h-px bg-dark-500"></div>
@@ -80,9 +99,12 @@ const TaskItem = ({
             <EditTags id={id} />
           </div>
           <div className="-mx-1 my-1 h-px bg-dark-500"></div>
-          <div className="mt-1 flex items-center justify-start text-light-50">
+          <div
+            className="mt-1 flex items-center justify-start"
+            onClick={handleClick}
+          >
             <button
-              onClick={toggleDeleteTask}
+              onClick={() => toggleDeleteTask(id)}
               className="flex h-full w-full cursor-pointer items-center justify-between rounded-md px-2 py-1.5 transition-all hover:bg-dark-500"
             >
               Delete
@@ -92,7 +114,7 @@ const TaskItem = ({
         <div className="flex h-full w-full items-center justify-start">
           <div
             className={`mr-2 flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg transition-all hover:bg-dark-700 ${isOptionsVisible ? "!cursor-default bg-dark-700" : ""}`}
-            id="taskOptionsBtn"
+            ref={buttonRef}
             onClick={handleClick}
           >
             <Ellipsis className=" h-4 w-4" />
