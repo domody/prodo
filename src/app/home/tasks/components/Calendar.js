@@ -3,14 +3,16 @@ import { ChevronRight, ChevronLeft } from "lucide-react";
 import { Circle } from "react-feather";
 
 const Calendar = ({ visible, setCreateTaskVisibility }) => {
-  const [date, setDate] = useState(new Date());
+  const dateToday = new Date();
+  const [selectedDate, setDate] = useState(new Date());
   const [daysInCurrentMonth, setDaysInMonth] = useState(
-    new Date(date.getFullYear(), date.getMonth(), 0).getDate(),
+    new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 0).getDate(),
   );
   const days = Array.from({ length: daysInCurrentMonth }, (_, i) => i + 1);
 
   const [weekdayStartDay, setWeekdayStartDay] = useState(
-    new Date(date.getFullYear(), date.getMonth(), 1).getDay() - 1,
+    new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1).getDay() -
+      1,
   );
 
   const months = [
@@ -28,32 +30,58 @@ const Calendar = ({ visible, setCreateTaskVisibility }) => {
     "December",
   ];
 
-  const dateMonth = months[date.getMonth()];
-  const dateYear = date.getFullYear();
-  const dateDay = date.getDate();
+  const dateMonth = months[selectedDate.getMonth()];
+  const dateYear = selectedDate.getFullYear();
+  const dateDay = selectedDate.getDate();
 
   const setDueDay = (day) => {
-    setDate(new Date(date.getFullYear(), date.getMonth(), day));
+    setDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), day));
   };
 
   const increaseMonth = () => {
-    if (date.getMonth() == 13) {
-      setDate(new Date(date.getFullYear() + 1, 1, date.getDay()));
+    if (selectedDate.getMonth() == 13) {
+      setDate(new Date(selectedDate.getFullYear() + 1, 1, 1));
     } else {
-      setDate(new Date(date.getFullYear(), date.getMonth() + 1, 1));
+      setDate(
+        new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 1),
+      );
     }
     setDaysInMonth(
-      new Date(date.getFullYear(), date.getMonth() + 2, 0).getDate(),
+      new Date(
+        selectedDate.getFullYear(),
+        selectedDate.getMonth() + 2,
+        0,
+      ).getDate(),
     );
   };
 
   const decreaseMonth = () => {
-    if (date.getMonth() == 0) {
-      setDate(new Date(date.getFullYear() - 1, 11, date.getDay()));
+    if (selectedDate.getMonth() == 0) {
+      setDate(new Date(selectedDate.getFullYear() - 1, 11, 1));
     } else {
-      setDate(new Date(date.getFullYear(), date.getMonth() - 1, 1));
+      setDate(
+        new Date(selectedDate.getFullYear(), selectedDate.getMonth() - 1, 1),
+      );
     }
-    setDaysInMonth(new Date(date.getFullYear(), date.getMonth(), 0).getDate());
+    setDaysInMonth(
+      new Date(
+        selectedDate.getFullYear(),
+        selectedDate.getMonth(),
+        0,
+      ).getDate(),
+    );
+  };
+
+  const checkDateCellIsCurrentDate = (day) => {
+    if (selectedDate.getMonth() != dateToday.getMonth()) {
+      return false;
+    } else if (selectedDate.getFullYear() != dateToday.getFullYear()) {
+      return false;
+    } else if (day != dateToday.getDate()) {
+      return false;
+    } else {
+      return true;
+    }
   };
 
   return (
@@ -100,7 +128,7 @@ const Calendar = ({ visible, setCreateTaskVisibility }) => {
         {days.map((day) => (
           <div
             key={day}
-            className={`cursor-pointer rounded-lg py-5 text-center transition-all hover:bg-dark-800 ${dateDay === day ? "border-2 border-red-950" : "border-2 border-dark-800"}`}
+            className={`cursor-pointer rounded-lg py-5 text-center transition-all hover:bg-dark-800  ${dateDay === day ? "border-2 border-red-900 bg-red-950" : "border-2 border-dark-800"} ${checkDateCellIsCurrentDate(day) ? "border-2 border-red-950 " : ""}`}
             onClick={() => setDueDay(day)}
           >
             {day}
