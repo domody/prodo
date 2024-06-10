@@ -14,7 +14,7 @@ codeblock
 > Cool ass indent
 
 use link bro
-https://prod.liveshare.vsengsaas.visualstudio.com/join?992D6510B8AC27DDDF95BCCB1A14178D278E
+https://prod.liveshare.vsengsaas.visualstudio.com/join?9EF42EF4E2A314040DCE5B51C8352A4A7887
 test it owrks from school pc
 
 **Bold**
