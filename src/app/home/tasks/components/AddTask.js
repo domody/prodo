@@ -1,7 +1,15 @@
 import { useState } from "react";
 import Task from "../../../../models/task";
-import { X, Tag, CircleSlash, Calendar, AlertCircle, Info } from "lucide-react";
+import {
+  X,
+  Tag,
+  CircleSlash,
+  CalendarIcon,
+  AlertCircle,
+  Info,
+} from "lucide-react";
 import { Circle } from "react-feather";
+import Calendar from "./Calendar";
 
 const AddTask = ({ visible, setCreateTaskVisibility }) => {
   const [title, setTitle] = useState("");
@@ -58,6 +66,13 @@ const AddTask = ({ visible, setCreateTaskVisibility }) => {
     setActiveSubPage(page);
   };
 
+  const [selectedStatus, setStatusSelection] = useState("notStarted");
+
+  var notStartedSelected = selectedStatus === "notStarted";
+  var inProgressSelected = selectedStatus === "inProgress";
+  var onHoldSelected = selectedStatus === "onHold";
+  var completedSelected = selectedStatus === "completed";
+
   return (
     <div
       className={`absolute left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black/25 transition-all ${visible ? "" : "pointer-events-none opacity-0"}`}
@@ -78,31 +93,31 @@ const AddTask = ({ visible, setCreateTaskVisibility }) => {
         </div>
         <div className="flex w-full items-center justify-start space-x-4 text-light-500">
           <button
-            className={`flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5 ${infoPageActive ? "border border-dark-500" : ""}`}
+            className={`flex items-center justify-center rounded-lg border bg-dark-800 px-3 py-1.5 ${infoPageActive ? "border-dark-500" : "border-dark-800"}`}
             onClick={() => changeSubPage("Info")}
           >
             <Info className="mr-1.5 h-4 w-4" /> Info
           </button>
           <button
-            className={`flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5 ${statusPageActive ? "border border-dark-500" : ""}`}
+            className={`flex items-center justify-center rounded-lg border bg-dark-800 px-3 py-1.5 ${statusPageActive ? "border-dark-500" : "border-dark-800"}`}
             onClick={() => changeSubPage("Status")}
           >
             <CircleSlash className="mr-1.5 h-4 w-4" /> Status
           </button>
           <button
-            className={`flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5 ${dueDatePageActive ? "border border-dark-500" : ""}`}
+            className={`flex items-center justify-center rounded-lg border bg-dark-800 px-3 py-1.5 ${dueDatePageActive ? "border-dark-500" : "border-dark-800"}`}
             onClick={() => changeSubPage("DueDate")}
           >
-            <Calendar className="mr-1.5 h-4 w-4" /> Due Date
+            <CalendarIcon className="mr-1.5 h-4 w-4" /> Due Date
           </button>
           <button
-            className={`flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5 ${priorityPageActive ? "border border-dark-500" : ""}`}
+            className={`flex items-center justify-center rounded-lg border bg-dark-800 px-3 py-1.5 ${priorityPageActive ? "border-dark-500" : "border-dark-800"}`}
             onClick={() => changeSubPage("Priority")}
           >
             <AlertCircle className="mr-1.5 h-4 w-4" /> Priority
           </button>
           <button
-            className={`flex items-center justify-center rounded-lg bg-dark-800 px-3 py-1.5 ${tagsPageActive ? "border border-dark-500" : ""}`}
+            className={`flex items-center justify-center rounded-lg border bg-dark-800 px-3 py-1.5 ${tagsPageActive ? "border-dark-500" : "border-dark-800"}`}
             onClick={() => changeSubPage("Tags")}
           >
             <Tag className="mr-1.5 h-4 w-4" /> Tags
@@ -110,54 +125,72 @@ const AddTask = ({ visible, setCreateTaskVisibility }) => {
         </div>
         <form
           onSubmit={handleSubmit}
-          className="w-full space-y-4 text-sm placeholder:text-sm"
+          className="w-full text-sm placeholder:text-sm"
         >
-          <input
-            type="text"
-            className="h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 placeholder:text-dark-400"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Name"
-            required
-          />
-          <textarea
-            type="text"
-            className="h-36 max-h-96 min-h-24 w-full rounded-lg border border-dark-500 bg-transparent px-2 py-4 text-light-50 placeholder:text-dark-400"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Description"
-            resiz
-          />
-          {/* <input
+          <div
+            className={`space-y-4 transition-all ${infoPageActive ? "" : "hidden"}`}
+          >
+            <input
+              type="text"
+              className={`h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 transition-all placeholder:text-dark-400 ${infoPageActive ? "" : "hidden"}`}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Name"
+              required
+            />
+            <textarea
+              type="text"
+              className={`h-36 max-h-96 min-h-24 w-full rounded-lg border border-dark-500 bg-transparent px-2 py-4 text-light-50 transition-all placeholder:text-dark-400 ${infoPageActive ? "" : "hidden"}`}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder={infoPageActive ? "Description" : null}
+              resiz
+            />
+          </div>
+          <div
+            className={`mb-2 flex items-start justify-start space-x-4 ${statusPageActive ? "" : "hidden"}`}
+          >
+            <button
+              className={`rounded-lg border px-4 py-2 ${notStartedSelected ? "border-2 border-rose-200 bg-rose-900 " : "border-1 border-rose-800 bg-dark-800"}`}
+              onClick={() => setStatusSelection("notStarted")}
+            >
+              Not Started
+            </button>
+
+            <button
+              className={`rounded-lg border px-4 py-2 ${inProgressSelected ? "border-2 border-amber-200 bg-amber-900 " : "border-1 border-amber-800 bg-dark-800"}`}
+              onClick={() => setStatusSelection("inProgress")}
+            >
+              In Progress
+            </button>
+
+            <button
+              className={`rounded-lg border px-4 py-2 ${onHoldSelected ? "border-2 border-cyan-200 bg-cyan-900 " : "border-1 border-cyan-800 bg-dark-800"}`}
+              onClick={() => setStatusSelection("onHold")}
+            >
+              On Hold
+            </button>
+
+            <button
+              className={`rounded-lg border px-4 py-2 ${completedSelected ? "border-2 border-green-200 bg-green-900 " : "border-1 border-green-800 bg-dark-800"}`}
+              onClick={() => setStatusSelection("completed")}
+            >
+              Completed
+            </button>
+          </div>
+          <div
+            className={`mb-2 flex items-start justify-start space-x-4 ${dueDatePageActive ? "" : "hidden"}`}
+          >
+            {/* <input
               type="date"
-              className="h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 placeholder:text-dark-400"
-              value={dueDate}
-              onChange={(e) => setDueDate(e.target.value)}
-              placeholder="Due date"
-            />
-            <input
-              type="number"
-              className="h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 placeholder:text-dark-400"
-              value={priority}
-              onChange={(e) => setPriority(e.target.value)}
-              placeholder="Priority (1, 2, 3)"
-            />
-
-            <input
-              type="text"
-              className="h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 placeholder:text-dark-400"
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
-              placeholder="Tags"
-            />
-            <input
-              type="text"
-              className="h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 placeholder:text-dark-400"
-              value={milestonesCount}
-              onChange={(e) => setMilestonesCount(e.target.value)}
-              placeholder="Milestones Amount"
+              className={`h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 placeholder:text-dark-400 transition-all ${dueDatePageActive ? "" : "hidden"}`}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Name"
+              required
             /> */}
-
+            <Calendar />
+          </div>
           <div className="flex w-full items-center justify-between text-sm font-medium">
             <div
               onClick={toggleVisibility}
