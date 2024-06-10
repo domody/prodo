@@ -29,7 +29,7 @@ const TaskItem = ({
   dueDate,
   priority,
   status,
-  tags,
+  team,
   milestones,
   id,
   toggleDeleteTask,
@@ -121,7 +121,7 @@ const TaskItem = ({
           </div>
 
           <div className="w-24 text-left">
-            <p className="line-clamp-1 max-w-full">TSK-109</p>
+            <p className="line-clamp-1 max-w-full">{team}-109</p>
           </div>
           <div className="w-[62.5%] text-left">
             <p className="line-clamp-1 max-w-full">{title}</p>

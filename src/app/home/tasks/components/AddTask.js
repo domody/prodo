@@ -17,7 +17,7 @@ const AddTask = ({ visible, setCreateTaskVisibility }) => {
   const [dueDate, setDueDate] = useState("");
   const [priority, setPriority] = useState("");
   const [status, setStatus] = useState("");
-  const [tags, setTags] = useState("");
+  const [team, setTeam] = useState("");
   const [milestonesCount, setMilestonesCount] = useState("");
 
   const toggleVisibility = () => {
@@ -32,9 +32,9 @@ const AddTask = ({ visible, setCreateTaskVisibility }) => {
         title,
         description,
         dueDate,
-        parseInt(priority),
+        priority,
         status,
-        tags.split(","),
+        team,
         parseInt(milestonesCount),
       );
       await Task.createTask(task);
@@ -45,7 +45,7 @@ const AddTask = ({ visible, setCreateTaskVisibility }) => {
       setDueDate("");
       setPriority("");
       setStatus("");
-      setTags("");
+      setTeam("");
       setMilestonesCount("");
     } catch (e) {
       console.error("Error adding document: ", e);
@@ -78,7 +78,7 @@ const AddTask = ({ visible, setCreateTaskVisibility }) => {
       className={`absolute left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black/25 transition-all ${visible ? "" : "pointer-events-none opacity-0"}`}
     >
       <div
-        className={`flex w-[52rem] flex-col items-center justify-center space-y-4 rounded-xl border border-dark-500 bg-dark-900 p-6 transition-all ${visible ? "mb-0" : "mb-32"}`}
+        className={`flex w-[52rem] max-h-[52rem] flex-col items-center justify-center space-y-4 rounded-xl border border-dark-500 bg-dark-900 p-6 transition-all ${visible ? "mb-0" : "mb-32"}`}
       >
         <div className="flex h-full w-full items-center justify-between">
           <div className="flex max-w-[30rem] flex-col items-start justify-start">
@@ -146,8 +146,103 @@ const AddTask = ({ visible, setCreateTaskVisibility }) => {
               placeholder={infoPageActive ? "Description" : null}
               resiz
             />
+
+            <p>Status</p>
+            <div className="flex justify-start items-center space-x-4" > 
+              <input
+                type="radio"
+                name="statusRadio"
+                value="notStarted"
+                onChange={(e) => setStatus(e.target.value)}
+              />
+              <label htmlFor="notStarted">Not Started</label>
+              <input
+                type="radio"
+                name="statusRadio"
+                value="inProgress"
+                onChange={(e) => setStatus(e.target.value)}
+              />
+              <label htmlFor="inProgress">In Progress</label>
+              <input
+                type="radio"
+                name="statusRadio"
+                value="onHold"
+                onChange={(e) => setStatus(e.target.value)}
+              />
+              <label htmlFor="onHold">On Hold</label>
+              <input
+                type="radio"
+                name="statusRadio"
+                value="Completed"
+                onChange={(e) => setStatus(e.target.value)}
+              />
+              <label htmlFor="Completed">Completed</label>
+            </div>
+
+            <p>Due Date</p>
+            <div className="flex justify-start items-center space-x-4" > 
+            <input
+            type="date"
+            className="h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 transition-all placeholder:text-dark-400"
+            value={dueDate}
+            onChange={(e) => setDueDate(e.target.value)}
+            placeholder="Due Date"
+            required
+            />
+            </div>
+
+            <p>Priority</p>
+            <div className="flex justify-start items-center space-x-4" > 
+              <input
+                type="radio"
+                name="priorityRadio"
+                value="Low"
+                onChange={(e) => setPriority(e.target.value)}
+              />
+              <label htmlFor="Low">Low</label>
+              <input
+                type="radio"
+                name="priorityRadio"
+                value="Medium"
+                onChange={(e) => setPriority(e.target.value)}
+              />
+              <label htmlFor="Medium">Medium</label>
+              <input
+                type="radio"
+                name="priorityRadio"
+                value="High"
+                onChange={(e) => setPriority(e.target.value)}
+              />
+              <label htmlFor="High">High</label>
+            </div>
+
+            <p>Team</p>
+            <div className="flex justify-start items-center space-x-4" > 
+              <input
+                type="radio"
+                name="teamRadio"
+                value="DVLP"
+                onChange={(e) => setTeam(e.target.value)}
+              />
+              <label htmlFor="DVLP">Develpment</label>
+              <input
+                type="radio"
+                name="teamRadio"
+                value="DSGN"
+                onChange={(e) => setTeam(e.target.value)}
+              />
+              <label htmlFor="DSGN">Design</label>
+              <input
+                type="radio"
+                name="teamRadio"
+                value="HR"
+                onChange={(e) => setTeam(e.target.value)}
+              />
+              <label htmlFor="HR">HR</label>
+            </div>
           </div>
-          <div
+
+          {/* <div
             className={`mb-2 flex items-start justify-start space-x-4 ${statusPageActive ? "" : "hidden"}`}
           >
             <button
@@ -177,7 +272,7 @@ const AddTask = ({ visible, setCreateTaskVisibility }) => {
             >
               Completed
             </button>
-          </div>
+          </div> */}
           <div
             className={`mb-2 flex items-start justify-start space-x-4 ${dueDatePageActive ? "" : "hidden"}`}
           >

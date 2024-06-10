@@ -3,13 +3,13 @@ import db from "../lib/firestore";
 import { collection, addDoc } from "firebase/firestore";
 
 class Task {
-  constructor(title, description, dueDate, priority, status, tags, milestones) {
+  constructor(title, description, dueDate, priority, status, team, milestones) {
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;
     this.priority = priority;
     this.status = status;
-    this.tags = tags;
+    this.team = team;
     this.milestones = milestones;
     this.current_milestone = 0;
   }
@@ -22,7 +22,7 @@ class Task {
         dueDate: task.dueDate,
         priority: task.priority,
         status: task.status,
-        tags: task.tags,
+        team: task.team,
         milestones: task.milestones,
         current_milestone: 0,
       });
@@ -44,7 +44,7 @@ class Task {
           new Date(data.dueDate),
           data.priority,
           data.status,
-          data.tags,
+          data.team,
           data.milestones,
         );
       } else {

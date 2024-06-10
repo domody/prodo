@@ -38,7 +38,7 @@ const ListTasks = ({ toggleAddTask, toggleDeleteTask }) => {
           dueDate={task.dueDate}
           priority={task.priority}
           status={task.status}
-          tags={task.tags}
+          team={task.team}
           milestones={task.milestonesCount}
           key={task.id}
           id={task.id}

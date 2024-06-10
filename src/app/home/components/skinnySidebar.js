@@ -44,7 +44,7 @@ const SkinnySidebar = () => {
             <MessageCircle className="h-6 w-6 text-dark-100" />
           </a> */}
 
-          <a className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-lg p-2 hover:bg-white/5">
+          <a className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-lg p-2 hover:bg-white/5" href="/home/calendar">
             <CalendarDays className="h-6 w-6 text-dark-100" />
           </a>
 

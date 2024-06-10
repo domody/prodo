@@ -99,9 +99,9 @@ const Calendar = ({ visible, setCreateTaskVisibility }) => {
   };
 
   return (
-    <div className="flex w-full flex-col items-center justify-center rounded-lg border border-dark-500 p-4">
-      <div className="b-2 pb-1 font-semibold text-dark-300">{dateYear}</div>
-      <div className="flex pb-4">
+    <div className="flex w-4/5 h-full flex-col items-center justify-center">
+      <div className="b-2 pb-1 font-semibold text-dark-300 hidden">{dateYear}</div>
+      <div className="flex pb-4 hidden">
         <button onClick={() => decreaseMonth()}>
           <ChevronLeft className="mx-2.5 h-8 w-8" />
         </button>
@@ -112,26 +112,26 @@ const Calendar = ({ visible, setCreateTaskVisibility }) => {
           <ChevronRight className="mx-2.5 h-8 w-8" />
         </button>
       </div>
-      <div className="grid w-full grid-cols-7 gap-2">
-        <div className="rounded-lg bg-dark-800 py-2 text-center text-lg">
+      <div className="grid w-full grid-cols-7">
+        <div className="rounded-lg py-2 text-center text-lg">
           Mon
         </div>
-        <div className="rounded-lg bg-dark-800 py-2 text-center text-lg">
+        <div className="rounded-lg py-2 text-center text-lg">
           Tue
         </div>
-        <div className="rounded-lg bg-dark-800 py-2 text-center text-lg">
+        <div className="rounded-lg py-2 text-center text-lg">
           Wed
         </div>
-        <div className="rounded-lg bg-dark-800 py-2 text-center text-lg">
+        <div className="rounded-lg py-2 text-center text-lg">
           Thu
         </div>
-        <div className="rounded-lg bg-dark-800 py-2 text-center text-lg">
+        <div className="rounded-lg py-2 text-center text-lg">
           Fri
         </div>
-        <div className="rounded-lg bg-dark-800 py-2 text-center text-lg">
+        <div className="rounded-lg py-2 text-center text-lg">
           Sat
         </div>
-        <div className="rounded-lg bg-dark-800 py-2 text-center text-lg">
+        <div className="rounded-lg py-2 text-center text-lg">
           Sun
         </div>
         {[...Array(weekdayStartDay)].map((_) => (
@@ -141,7 +141,7 @@ const Calendar = ({ visible, setCreateTaskVisibility }) => {
         {days.map((day) => (
           <div
             key={day}
-            className={`cursor-pointer rounded-lg py-5 text-center transition-all hover:bg-dark-800  ${dateDay === day ? "border-2 border-red-900 bg-red-950" : "border-2 border-dark-800"} ${checkDateCellIsCurrentDate(day) ? "border-2 border-red-950 " : ""}`}
+            className={`cursor-pointer py-5 text-center transition-all hover:bg-dark-800 aspect-[4/3]  ${dateDay === day ? "border-2 border-red-900 bg-red-950" : "border-r border-b border-dark-800"} ${checkDateCellIsCurrentDate(day) ? "border-2 border-red-950 " : ""}`}
             onClick={() => setDueDay(day)}
           >
             {day}
