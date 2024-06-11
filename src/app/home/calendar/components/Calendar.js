@@ -134,69 +134,74 @@ const Calendar = () => {
   };
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center">
-      <div className="b-2 hidden pb-1 font-semibold text-dark-300">
-        {dateYear}
-      </div>
-      <div className="flex hidden pb-4">
-        <button onClick={() => decreaseMonth()}>
-          <ChevronLeft className="mx-2.5 h-8 w-8" />
-        </button>
-
-        <div className="w-32 text-center text-2xl">{dateMonth}</div>
-
-        <button onClick={() => increaseMonth()}>
-          <ChevronRight className="mx-2.5 h-8 w-8" />
-        </button>
-      </div>
-      <div className="grid h-12 w-full grid-cols-7 divide-x divide-dark-800 text-dark-50">
-        <div className="flex items-center justify-end px-6">Mon</div>
-        <div className="flex items-center justify-end px-6">Tue</div>
-        <div className="flex items-center justify-end px-6">Wed</div>
-        <div className="flex items-center justify-end px-6">Thu</div>
-        <div className="flex items-center justify-end px-6">Fri</div>
-        <div className="flex items-center justify-end px-6">Sat</div>
-        <div className="flex items-center justify-end px-6">Sun</div>
-      </div>
-      <div className="grid h-full w-full grid-cols-7 divide-x divide-y divide-dark-800">
-        {[...Array(weekdayStartDay)].map((_, index) => (
-          <div
-            key={index}
-            className={`h-full ${index === 0 ? "border-t border-dark-800" : ""}`}
-          ></div>
-        ))}
-
-        {days.map((day) => (
-          <div
-            key={day}
-            className={`scrollbar-hidden flex h-full cursor-pointer flex-col items-start justify-start overflow-y-auto p-3 text-center text-sm transition-all`}
-          >
-            <div className="sticky left-0 top-0 w-full bg-dark-900">
-              <div
-                className={`ml-auto flex aspect-square w-8 items-center justify-center rounded-full ${checkDateCellIsCurrentDate(day) ? "bg-red-500" : ""}`}
-              >
-                <p className={``}>{day}</p>
-              </div>
-            </div>
-            <div className="flex h-0 w-full flex-col items-start justify-start space-y-2 rounded">
-              {getTasksForDay(day).map((task) => (
-                <a
-                  key={task.id}
-                  className="flex w-full items-center justify-start rounded bg-blue-500/50 px-3 py-1.5 text-xs font-medium text-blue-300"
-                  href="/home/tasks"
-                >
-                  <p className="w-full line-clamp-1 text-start">{task.title}  </p>
-                  
-                </a>
-              ))}
-            </div>
+    <>
+      <div className="h-20 w-full border-b border-dark-500">
+        <div className="flex h-full items-center justify-start px-8">
+          <button onClick={() => decreaseMonth()}>
+            <ChevronLeft className="h-5 w-5 text-dark-300" />
+          </button>
+          <div className="text-center w-48 text-xl mx-2.5">
+            <span className="text-medium text-light-50">{dateMonth}</span>{" "}
+            {dateYear}
           </div>
-        ))}
-        {[...Array(42 - daysInCurrentMonth - weekdayStartDay)].map((_) => (
-          <div className=""></div>
-        ))}
+          <button onClick={() => increaseMonth()}>
+            <ChevronRight className="h-5 w-5 text-dark-300" />
+          </button>
+        </div>
       </div>
-    </div>
+      <div className="flex h-[calc(100vh-5rem)] w-full flex-col items-start justify-start overflow-x-hidden">
+        <div className="flex h-full w-full flex-col items-center justify-center">
+          <div className="grid h-12 w-full grid-cols-7 divide-x divide-dark-800 text-dark-50">
+            <div className="flex items-center justify-end px-6">Mon</div>
+            <div className="flex items-center justify-end px-6">Tue</div>
+            <div className="flex items-center justify-end px-6">Wed</div>
+            <div className="flex items-center justify-end px-6">Thu</div>
+            <div className="flex items-center justify-end px-6">Fri</div>
+            <div className="flex items-center justify-end px-6">Sat</div>
+            <div className="flex items-center justify-end px-6">Sun</div>
+          </div>
+          <div className="grid h-full w-full grid-cols-7 divide-x divide-y divide-dark-800">
+            {[...Array(weekdayStartDay)].map((_, index) => (
+              <div
+                key={index}
+                className={`h-full ${index === 0 ? "border-t border-dark-800" : ""}`}
+              ></div>
+            ))}
+
+            {days.map((day) => (
+              <div
+                key={day}
+                className={`scrollbar-hidden flex h-full cursor-pointer flex-col items-start justify-start overflow-y-auto p-3 text-center text-sm transition-all`}
+              >
+                <div className="sticky left-0 top-0 w-full bg-dark-900">
+                  <div
+                    className={`ml-auto flex aspect-square w-8 items-center justify-center rounded-full ${checkDateCellIsCurrentDate(day) ? "bg-red-500" : ""}`}
+                  >
+                    <p className={``}>{day}</p>
+                  </div>
+                </div>
+                <div className="flex h-0 w-full flex-col items-start justify-start space-y-2 rounded">
+                  {getTasksForDay(day).map((task) => (
+                    <a
+                      key={task.id}
+                      className="flex w-full items-center justify-start rounded bg-blue-500/50 px-3 py-1.5 text-xs font-medium text-blue-300"
+                      href="/home/tasks"
+                    >
+                      <p className="line-clamp-1 w-full text-start">
+                        {task.title}{" "}
+                      </p>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ))}
+            {[...Array(42 - daysInCurrentMonth - weekdayStartDay)].map((_) => (
+              <div className=""></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 export default Calendar;
