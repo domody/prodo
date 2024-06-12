@@ -8,7 +8,11 @@ const Calendar = () => {
   const dateToday = new Date();
   const [selectedDate, setDate] = useState(new Date());
   const [daysInCurrentMonth, setDaysInMonth] = useState(
-    new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0).getDate(),
+    new Date(
+      selectedDate.getFullYear(),
+      selectedDate.getMonth() + 1,
+      0,
+    ).getDate(),
   );
   const days = Array.from({ length: daysInCurrentMonth }, (_, i) => i + 1);
 
@@ -38,7 +42,7 @@ const Calendar = () => {
 
   const increaseMonth = () => {
     if (selectedDate.getMonth() === 11) {
-      setDate(new Date(selectedDate.getFullYear() + 1, 0, 1)); 
+      setDate(new Date(selectedDate.getFullYear() + 1, 0, 1));
       setWeekdayStartDay(
         new Date(selectedDate.getFullYear() + 1, 0, 1).getDay() - 1,
       );
@@ -49,7 +53,7 @@ const Calendar = () => {
       let newWeekday =
         new Date(
           selectedDate.getFullYear(),
-          selectedDate.getMonth() + 1, 
+          selectedDate.getMonth() + 1,
           1,
         ).getDay() - 1;
       if (newWeekday < 0) {
@@ -147,27 +151,41 @@ const Calendar = () => {
       </div>
       <div className="flex h-[calc(100vh-5rem)] w-full flex-col items-start justify-start overflow-x-hidden">
         <div className="flex h-full w-full flex-col items-center justify-center">
-          <div className="grid h-12 w-full grid-cols-7 divide-x divide-dark-800 text-dark-50">
-            <div className="flex items-center justify-end px-6">Mon</div>
-            <div className="flex items-center justify-end px-6">Tue</div>
-            <div className="flex items-center justify-end px-6">Wed</div>
-            <div className="flex items-center justify-end px-6">Thu</div>
-            <div className="flex items-center justify-end px-6">Fri</div>
-            <div className="flex items-center justify-end px-6">Sat</div>
-            <div className="flex items-center justify-end px-6">Sun</div>
+          <div className="grid h-12 w-full grid-cols-7 text-dark-50">
+            <div className="flex items-center justify-end border-r border-dark-800 px-6">
+              Mon
+            </div>
+            <div className="flex items-center justify-end border-r border-dark-800 px-6">
+              Tue
+            </div>
+            <div className="flex items-center justify-end border-r border-dark-800 px-6">
+              Wed
+            </div>
+            <div className="flex items-center justify-end border-r border-dark-800 px-6">
+              Thu
+            </div>
+            <div className="flex items-center justify-end border-r border-dark-800 px-6">
+              Fri
+            </div>
+            <div className="flex items-center justify-end border-r border-dark-800 px-6">
+              Sat
+            </div>
+            <div className="flex items-center justify-end border-r border-dark-800 px-6">
+              Sun
+            </div>
           </div>
-          <div className="grid h-[calc((100vh-5rem-3rem))] w-full grid-cols-7 divide-x divide-y divide-dark-800">
+          <div className="grid h-[calc((100vh-5rem-3rem))] w-full grid-cols-7">
             {[...Array(weekdayStartDay)].map((_, index) => (
               <div
                 key={index}
-                className={`h-full ${index === 0 ? "border-t border-dark-800" : ""}`}
+                className={`h-full border-r border-t border-dark-800`}
               ></div>
             ))}
 
             {days.map((day) => (
               <div
                 key={day}
-                className={`scrollbar-hidden h-[calc((100vh-5rem-3rem)/6)] cursor-pointer flex-col items-start justify-start overflow-y-auto p-3 text-center text-sm transition-all`}
+                className={`scrollbar-hidden h-[calc((100vh-5rem-3rem)/6)] cursor-pointer flex-col items-start justify-start overflow-y-auto border-r border-t border-dark-800 p-3 text-center text-sm transition-all`}
               >
                 <div className="sticky left-0 top-0 w-full bg-dark-900">
                   <div
@@ -192,7 +210,7 @@ const Calendar = () => {
               </div>
             ))}
             {[...Array(42 - daysInCurrentMonth - weekdayStartDay)].map((_) => (
-              <div className="h-[calc((100vh-5rem-3rem)/6)]"></div>
+              <div className="h-[calc((100vh-5rem-3rem)/6)] border-r border-t border-dark-800"></div>
             ))}
           </div>
         </div>
