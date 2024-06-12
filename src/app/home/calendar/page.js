@@ -24,7 +24,7 @@ import Calendar from "./components/Calendar";
 export default function Home() {
   return (
     <main className="flex h-screen w-screen items-start justify-start !overflow-hidden text-balance bg-dark-900">
-      <SkinnySidebar />
+      <SkinnySidebar active="calendar"/>
       <LargeSidebar />
       <div className="flex h-screen w-full items-start justify-start">
         <div className="flex min-h-screen w-full flex-col items-start justify-start overflow-x-hidden">

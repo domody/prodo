@@ -1,12 +1,5 @@
 import { Codesandbox } from "react-feather";
 
-import { AdjustmentsVerticalIcon } from "@heroicons/react/24/outline";
-import { ChatBubbleOvalLeftIcon } from "@heroicons/react/24/outline";
-import { QueueListIcon } from "@heroicons/react/24/outline";
-import { DocumentIcon } from "@heroicons/react/24/outline";
-import { Cog6ToothIcon } from "@heroicons/react/24/outline";
-import { UserCircleIcon } from "@heroicons/react/24/outline";
-
 import { LayoutDashboard } from "lucide-react";
 import { ListTodo } from "lucide-react";
 import { MessageCircle } from "lucide-react";
@@ -17,7 +10,13 @@ import { Inbox } from "lucide-react";
 import { Folder } from "lucide-react";
 import { CalendarDays } from "lucide-react";
 
-const SkinnySidebar = () => {
+const SkinnySidebar = ({ active }) => {
+
+  const dashboardActive = active === "dashboard";
+  const calendarActive = active === "calendar";
+  const tasksActive = active === "tasks";
+  const notesActive = active === "notes";
+
   return (
     <div className="h-screen w-20 border-r border-dark-500 px-4 py-4">
       <div className="flex h-full w-full flex-col items-center justify-start">
@@ -31,7 +30,7 @@ const SkinnySidebar = () => {
         <div className="flex flex-col items-start justify-center space-y-1 pt-4">
           <a
             href="/home"
-            className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-lg p-2 hover:bg-white/5"
+            className={`flex h-12 w-12 cursor-pointer items-center justify-center rounded-lg p-2 hover:bg-white/5 ${dashboardActive ? "bg-white/5" : ""}`}
           >
             <LayoutDashboard className="h-6 w-6 text-dark-100" />
           </a>
@@ -44,20 +43,23 @@ const SkinnySidebar = () => {
             <MessageCircle className="h-6 w-6 text-dark-100" />
           </a> */}
 
-          <a className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-lg p-2 hover:bg-white/5" href="/home/calendar">
+          <a
+            className={`flex h-12 w-12 cursor-pointer items-center justify-center rounded-lg p-2 hover:bg-white/5 ${calendarActive ? "bg-white/5" : ""}`}
+            href="/home/calendar"
+          >
             <CalendarDays className="h-6 w-6 text-dark-100" />
           </a>
 
           <a
             href="/home/tasks"
-            className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-lg p-2 hover:bg-white/5"
+            className={`flex h-12 w-12 cursor-pointer items-center justify-center rounded-lg p-2 hover:bg-white/5 ${tasksActive ? "bg-white/5" : ""}`}
           >
             <ListTodo className="h-6 w-6 text-dark-100" />
           </a>
 
           <a
             href=""
-            className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-lg p-2 hover:bg-white/5"
+            className={`flex h-12 w-12 cursor-pointer items-center justify-center rounded-lg p-2 hover:bg-white/5 ${notesActive ? "bg-white/5" : ""}`}
           >
             <NotepadText className="h-6 w-6 text-dark-100" />
           </a>

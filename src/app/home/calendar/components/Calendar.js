@@ -8,7 +8,7 @@ const Calendar = () => {
   const dateToday = new Date();
   const [selectedDate, setDate] = useState(new Date());
   const [daysInCurrentMonth, setDaysInMonth] = useState(
-    new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 0).getDate(),
+    new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0).getDate(),
   );
   const days = Array.from({ length: daysInCurrentMonth }, (_, i) => i + 1);
 
@@ -36,30 +36,25 @@ const Calendar = () => {
   const dateYear = selectedDate.getFullYear();
   const dateDay = selectedDate.getDate();
 
-  const setDueDay = (day) => {
-    setDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), day));
-  };
-
   const increaseMonth = () => {
-    if (selectedDate.getMonth() == 13) {
-      setDate(new Date(selectedDate.getFullYear() + 1, 1, 1));
+    if (selectedDate.getMonth() === 11) {
+      setDate(new Date(selectedDate.getFullYear() + 1, 0, 1)); 
       setWeekdayStartDay(
-        new Date(selectedDate.getFullYear() + 1, 1, 1).getDay() - 1,
+        new Date(selectedDate.getFullYear() + 1, 0, 1).getDay() - 1,
       );
     } else {
       setDate(
         new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 1),
       );
-      var newWeekday =
+      let newWeekday =
         new Date(
           selectedDate.getFullYear(),
-          selectedDate.getMonth() - 1,
+          selectedDate.getMonth() + 1, 
           1,
-        ).getDay() - 3;
+        ).getDay() - 1;
       if (newWeekday < 0) {
         newWeekday += 7;
       }
-      console.log(newWeekday);
       setWeekdayStartDay(newWeekday);
     }
     setDaysInMonth(
@@ -69,10 +64,11 @@ const Calendar = () => {
         0,
       ).getDate(),
     );
+    console.log(weekdayStartDay);
   };
 
   const decreaseMonth = () => {
-    if (selectedDate.getMonth() == 0) {
+    if (selectedDate.getMonth() === 0) {
       setDate(new Date(selectedDate.getFullYear() - 1, 11, 1));
       setWeekdayStartDay(
         new Date(selectedDate.getFullYear() - 1, 11, 1).getDay() - 1,
@@ -81,12 +77,12 @@ const Calendar = () => {
       setDate(
         new Date(selectedDate.getFullYear(), selectedDate.getMonth() - 1, 1),
       );
-      var newWeekday =
+      let newWeekday =
         new Date(
           selectedDate.getFullYear(),
           selectedDate.getMonth() - 1,
           1,
-        ).getDay() - 3;
+        ).getDay() - 1;
       if (newWeekday < 0) {
         newWeekday += 7;
       }
@@ -99,6 +95,7 @@ const Calendar = () => {
         0,
       ).getDate(),
     );
+    console.log(weekdayStartDay);
   };
 
   const checkDateCellIsCurrentDate = (day) => {
@@ -124,7 +121,6 @@ const Calendar = () => {
       setTasks(tasksData);
     });
 
-    // Clean up the listener when the component unmounts
     return () => unsubscribe();
   }, []);
 
@@ -140,7 +136,7 @@ const Calendar = () => {
           <button onClick={() => decreaseMonth()}>
             <ChevronLeft className="h-5 w-5 text-dark-300" />
           </button>
-          <div className="text-center w-48 text-xl mx-2.5">
+          <div className="mx-2.5 w-48 text-center text-xl">
             <span className="text-medium text-light-50">{dateMonth}</span>{" "}
             {dateYear}
           </div>
@@ -160,7 +156,7 @@ const Calendar = () => {
             <div className="flex items-center justify-end px-6">Sat</div>
             <div className="flex items-center justify-end px-6">Sun</div>
           </div>
-          <div className="grid h-full w-full grid-cols-7 divide-x divide-y divide-dark-800">
+          <div className="grid h-[calc((100vh-5rem-3rem))] w-full grid-cols-7 divide-x divide-y divide-dark-800">
             {[...Array(weekdayStartDay)].map((_, index) => (
               <div
                 key={index}
@@ -171,7 +167,7 @@ const Calendar = () => {
             {days.map((day) => (
               <div
                 key={day}
-                className={`scrollbar-hidden flex h-full cursor-pointer flex-col items-start justify-start overflow-y-auto p-3 text-center text-sm transition-all`}
+                className={`scrollbar-hidden h-[calc((100vh-5rem-3rem)/6)] cursor-pointer flex-col items-start justify-start overflow-y-auto p-3 text-center text-sm transition-all`}
               >
                 <div className="sticky left-0 top-0 w-full bg-dark-900">
                   <div
@@ -180,7 +176,7 @@ const Calendar = () => {
                     <p className={``}>{day}</p>
                   </div>
                 </div>
-                <div className="flex h-0 w-full flex-col items-start justify-start space-y-2 rounded">
+                <div className="flex h-full w-full flex-col items-start justify-start space-y-2 rounded pt-2">
                   {getTasksForDay(day).map((task) => (
                     <a
                       key={task.id}
@@ -196,7 +192,7 @@ const Calendar = () => {
               </div>
             ))}
             {[...Array(42 - daysInCurrentMonth - weekdayStartDay)].map((_) => (
-              <div className=""></div>
+              <div className="h-[calc((100vh-5rem-3rem)/6)]"></div>
             ))}
           </div>
         </div>

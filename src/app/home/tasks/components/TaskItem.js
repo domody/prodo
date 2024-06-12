@@ -74,7 +74,7 @@ const TaskItem = ({
       <div className="relative flex !h-14 w-full items-center justify-between border-b border-dark-500 px-12">
         <div
           ref={menuRef}
-          className={`absolute left-12 z-50 w-40 select-none rounded-md border border-dark-500 bg-dark-900 p-1 text-sm opacity-100 transition-all ${isOptionsVisible ? "top-12" : "pointer-events-none scale-90 !opacity-0 z-0 top-8"}`}
+          className={`absolute left-12 z-50 w-40 select-none rounded-md border border-dark-500 bg-dark-900 p-1 text-sm opacity-100 transition-all ${isOptionsVisible ? "top-12" : "pointer-events-none scale-90 left-10 !opacity-0 z-0 top-8"}`}
         >
           <div
             className="flex h-full w-full items-center justify-start"

@@ -67,7 +67,7 @@ export default function Home() {
         visible={deleteTaskVisibility}
         setDeleteTaskVisibility={setDeleteTaskVisibility}
       />
-      <SkinnySidebar />
+      <SkinnySidebar active="tasks"/>
       <LargeSidebar />
       <div className="flex h-screen w-full items-start justify-start">
         <div className="flex min-h-screen w-full flex-col items-start justify-start overflow-x-hidden">

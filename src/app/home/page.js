@@ -4,7 +4,7 @@ import LargeSidebar from "./components/largeSidebar";
 export default function Home() {
   return (
     <main className="flex w-screen items-start justify-start text-balance bg-dark-900">
-      <SkinnySidebar />
+      <SkinnySidebar active="dashboard"/>
       <LargeSidebar />
       <div className="flex min-h-screen w-full items-start justify-start">
         <div className="flex min-h-screen w-full flex-col items-start justify-start">
