@@ -3,6 +3,7 @@ import { ChevronRight, ChevronLeft } from "lucide-react";
 import db from "../../../../lib/firestore";
 import { collection, onSnapshot } from "firebase/firestore";
 import { Circle } from "react-feather";
+import CalendarTask from "./CalendarTask";
 
 const Calendar = () => {
   const dateToday = new Date();
@@ -133,20 +134,38 @@ const Calendar = () => {
     return tasks.filter((task) => task.dueDate === taskDate);
   };
 
+  const [modalTask, setModalTask] = useState([]);
+  const [taskCellRef, setTaskCellRef] = useState(null);
+
+  const showTaskModal = (taskIn, cellRef) => {
+    setModalTask(taskIn);
+    setTaskCellRef(cellRef);
+  };
+
+  const hideTaskModal = () => {
+    setTaskCellRef(null);
+  };
+
   return (
     <>
       <div className="h-20 w-full border-b border-dark-500">
-        <div className="flex h-full items-center justify-start px-8">
-          <button onClick={() => decreaseMonth()}>
-            <ChevronLeft className="h-5 w-5 text-dark-300" />
-          </button>
+        <div className="flex h-full items-center justify-between px-8">
           <div className="mx-2.5 w-48 text-center text-xl">
             <span className="text-medium text-light-50">{dateMonth}</span>{" "}
             {dateYear}
           </div>
-          <button onClick={() => increaseMonth()}>
-            <ChevronRight className="h-5 w-5 text-dark-300" />
-          </button>
+          <div className="flex">
+            <button onClick={() => decreaseMonth()}>
+              <ChevronLeft className="h-5 w-5 text-dark-100" />
+            </button>
+            {/* TP to today on calendar */}
+            <button className="text-base mx-3 text-dark-100"> 
+              Today
+            </button>
+            <button onClick={() => increaseMonth()}>
+              <ChevronRight className="h-5 w-5 text-dark-100" />
+            </button>
+          </div>
         </div>
       </div>
       <div className="flex h-[calc(100vh-5rem)] w-full flex-col items-start justify-start overflow-x-hidden">
@@ -182,33 +201,51 @@ const Calendar = () => {
               ></div>
             ))}
 
-            {days.map((day) => (
-              <div
-                key={day}
-                className={`scrollbar-hidden h-[calc((100vh-5rem-3rem)/6)] cursor-pointer flex-col items-start justify-start overflow-y-auto border-r border-t border-dark-800 p-3 text-center text-sm transition-all`}
-              >
-                <div className="sticky left-0 top-0 w-full bg-dark-900">
+            {days.map((day) => {
+              const tasksForDay = getTasksForDay(day);
+              const cellRef = `cell-${day}`;
+
+              return (
+                <div className="relative">
                   <div
-                    className={`ml-auto flex aspect-square w-8 items-center justify-center rounded-full ${checkDateCellIsCurrentDate(day) ? "bg-red-500" : ""}`}
+                    key={day}
+                    className={`scrollbar-hidden relative z-0 h-[calc((100vh-5rem-3rem)/6)] cursor-pointer flex-col items-start justify-start overflow-y-auto border-r border-t border-dark-800 p-3 text-center text-sm transition-all`}
                   >
-                    <p className={``}>{day}</p>
+                    <div className="sticky left-0 top-0 w-full bg-dark-900">
+                      <div
+                        className={`ml-auto flex aspect-square w-8 items-center justify-center rounded-full ${checkDateCellIsCurrentDate(day) ? "bg-red-500" : ""}`}
+                      >
+                        <p className={``}>{day}</p>
+                      </div>
+                    </div>
+                    <div className="flex h-full w-full flex-col items-start justify-start space-y-2 rounded pt-2">
+                      {tasksForDay.length > 0 &&
+                        tasksForDay.map((task) => (
+                          <button
+                            key={task.id}
+                            className="flex w-full items-center justify-start rounded bg-blue-500/50 px-3 py-1 text-xs font-medium text-blue-300"
+                            // href="/home/tasks"
+                            onClick={() => showTaskModal(task, cellRef)}
+                          >
+                            <p className="line-clamp-1 w-full text-start">
+                              {task.title}
+                            </p>
+                          </button>
+                        ))}
+                    </div>
                   </div>
+                  {tasksForDay.length > 0 && (
+                    <CalendarTask
+                      task={modalTask}
+                      taskCellRef={taskCellRef}
+                      cellRef={cellRef}
+                      hideTaskModal={hideTaskModal}
+                    />
+                  )}
                 </div>
-                <div className="flex h-full w-full flex-col items-start justify-start space-y-2 rounded pt-2">
-                  {getTasksForDay(day).map((task) => (
-                    <a
-                      key={task.id}
-                      className="flex w-full items-center justify-start rounded bg-blue-500/50 px-3 py-1.5 text-xs font-medium text-blue-300"
-                      href="/home/tasks"
-                    >
-                      <p className="line-clamp-1 w-full text-start">
-                        {task.title}{" "}
-                      </p>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            ))}
+              );
+            })}
+            {/* <CalendarTask task={modalTask} /> */}
             {[...Array(42 - daysInCurrentMonth - weekdayStartDay)].map((_) => (
               <div className="h-[calc((100vh-5rem-3rem)/6)] border-r border-t border-dark-800"></div>
             ))}
