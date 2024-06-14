@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { X, Text, EllipsisVertical } from "lucide-react";
+import db from "../../../../lib/firestore";
+import { doc, updateDoc } from "firebase/firestore"; 
 
 const CalendarTask = ({ task, taskCellRef, cellRef, hideTaskModal }) => {
   const calendarTaskModalRef = useRef(null);
@@ -24,12 +26,37 @@ const CalendarTask = ({ task, taskCellRef, cellRef, hideTaskModal }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  });
+  }, [visible]);
+
+  const completeTask = async () => {
+    try {
+      const taskRef = doc(db, "tasks", task.id);
+      await updateDoc(taskRef, {
+        completed: true
+      });
+      console.log('Successfully updated document.');
+      hideTaskModal()
+    } catch (error) {
+      console.error("Error updating document: ", error);
+    }
+  };
+
+  const uncompleteTask = async () => {
+    try {
+      const taskRef = doc(db, "tasks", task.id);
+      await updateDoc(taskRef, {
+        completed: false
+      });
+      console.log('Successfully updated document.');
+      hideTaskModal()
+    } catch (error) {
+      console.error("Error updating document: ", error);
+    }
+  };
 
   return (
     <div
       ref={calendarTaskModalRef}
-      onClick={hideTaskModal}
       className={`absolute -left-4 top-1/2 z-50 flex min-w-[26rem] -translate-x-full -translate-y-1/2 flex-col items-start justify-start rounded-lg border border-dark-700 bg-dark-900 px-6 py-4 text-sm transition-all ${
         visible ? "" : "hidden"
       }`}
@@ -47,12 +74,20 @@ const CalendarTask = ({ task, taskCellRef, cellRef, hideTaskModal }) => {
         <p>{task.priority}</p>
         <p>{task.team}</p>
       </div>
-      <div className="mt-6 flex w-full items-center justify-end text-sm font-medium">
+      <div className="mt-6 flex w-full items-center justify-end text-ms font-medium">
         <button
           type="submit"
-          className="{/*bg-light-50  text-dark-900*/} rounded-lg border border-dark-700 px-4 py-2 "
+          className={`{/*bg-light-50  text-dark-900*/} rounded-lg border border-dark-700 px-4 py-1.5 ${task.completed ? "hidden" : ""}`}
+          onClick={completeTask}
         >
           Mark as Complete
+        </button>
+        <button
+          type="submit"
+          className={`{/*bg-light-50  text-dark-900*/} rounded-lg border border-dark-700 px-4 py-1.5 ${task.completed ? "" : "hidden"}`}
+          onClick={uncompleteTask}
+        >
+          Uncomplete Task
         </button>
       </div>
     </div>

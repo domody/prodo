@@ -150,9 +150,9 @@ const Calendar = () => {
     <>
       <div className="h-20 w-full border-b border-dark-500">
         <div className="flex h-full items-center justify-between px-8">
-          <div className="mx-2.5 w-48 text-center text-xl">
-            <span className="text-medium text-light-50">{dateMonth}</span>{" "}
-            {dateYear}
+          <div className="mx-2.5 text-left text-xl">
+            {dateMonth}{" "}{dateYear}
+
           </div>
           <div className="flex">
             <button onClick={() => decreaseMonth()}>
@@ -227,7 +227,7 @@ const Calendar = () => {
                             // href="/home/tasks"
                             onClick={() => showTaskModal(task, cellRef)}
                           >
-                            <p className="line-clamp-1 w-full text-start">
+                            <p className={`line-clamp-1 w-full text-start ${task.completed ? "line-through" : ""}`}>
                               {task.title}
                             </p>
                           </button>

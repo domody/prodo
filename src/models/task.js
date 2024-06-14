@@ -25,6 +25,7 @@ class Task {
         team: task.team,
         milestones: task.milestones,
         current_milestone: 0,
+        completed: false,
       });
       console.log("Task created successfully with ID:", docRef.id);
     } catch (error) {
@@ -46,6 +47,7 @@ class Task {
           data.status,
           data.team,
           data.milestones,
+          data.completed
         );
       } else {
         console.log("No data available");
@@ -56,9 +58,9 @@ class Task {
     }
   }
 
-  static async updateTask(title, updates) {
+  static async updateTask(id, updates) {
     try {
-      const taskRef = ref(database, "tasks/" + title);
+      const taskRef = id;
       await update(taskRef, updates);
       console.log("Task updated successfully!");
     } catch (error) {

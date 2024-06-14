@@ -6,7 +6,7 @@ import db from "../../../../lib/firestore";
 import { collection, onSnapshot } from "firebase/firestore";
 import TaskItem from "./TaskItem";
 
-const ListTasks = ({ toggleAddTask, toggleDeleteTask }) => {
+const ListTasks = ({ toggleAddTask, toggleDeleteTask, toggleEditTask }) => {
   const [tasks, setTasks] = useState([]);
   // const [tasksEmpty, setTasksEmpty] = useState(true);
   const tasksEmpty = tasks.length === 0;
@@ -43,6 +43,7 @@ const ListTasks = ({ toggleAddTask, toggleDeleteTask }) => {
           key={task.id}
           id={task.id}
           toggleDeleteTask={toggleDeleteTask}
+          toggleEditTask={toggleEditTask}
         />
       ))}
 

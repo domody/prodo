@@ -33,6 +33,7 @@ const TaskItem = ({
   milestones,
   id,
   toggleDeleteTask,
+  toggleEditTask,
 }) => {
   const [isOptionsVisible, setIsOptionsVisible] = useState(false);
   const menuRef = useRef(null);
@@ -63,6 +64,11 @@ const TaskItem = ({
     };
   }, [isOptionsVisible]);
 
+  const handleEditTaskClick = (id) => {
+    toggleEditTask(id);
+    handleClick()
+  }
+
   // var InProgress = state === "InProgress";
   // var Assigned = state === "Assigned";
   // var PendingReview = state === "PendingReview";
@@ -76,6 +82,12 @@ const TaskItem = ({
           ref={menuRef}
           className={`absolute left-12 z-50 w-40 select-none rounded-md border border-dark-500 bg-dark-900 p-1 text-sm opacity-100 transition-all ${isOptionsVisible ? "top-12" : "pointer-events-none scale-90 left-10 !opacity-0 z-0 top-8"}`}
         >
+          <button
+            onClick={() => handleEditTaskClick(id)}
+            className="flex h-full w-full cursor-pointer items-center justify-between rounded-md px-2 py-1.5 transition-all hover:bg-dark-500"
+          >
+            Edit
+          </button>
           <div
             className="flex h-full w-full items-center justify-start"
             onClick={handleClick}

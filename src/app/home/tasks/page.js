@@ -38,12 +38,15 @@ import AddTask from "./components/AddTask";
 import ListTasks from "./components/ListTasks";
 
 import DeleteTask from "./components/DeleteTask";
+import EditTask from "./components/EditTask"
 
 export default function Home() {
   const [createTaskVisiblity, setCreateTaskVisibility] = useState(false);
   const [deleteTaskVisibility, setDeleteTaskVisibility] = useState(false);
+  const [editTaskVisibility, setEditTaskVisibility] = useState(false);
 
   const [deleteID, setDeleteID] = useState("");
+  const [editID, setEditID] = useState("");
 
   const toggleAddTask = () => {
     setCreateTaskVisibility(true);
@@ -53,11 +56,18 @@ export default function Home() {
     setDeleteTaskVisibility(true);
     setDeleteID(id);
   };
+  
+  const toggleEditTask = (id) => {
+    setEditID(id);
+    setTimeout(() => {
+      setEditTaskVisibility(true);
+    }, 100);
+  };
 
 
   return (
     <main className="flex h-screen w-screen items-start justify-start !overflow-hidden text-balance bg-dark-900">
-
+      
       <AddTask
         visible={createTaskVisiblity}
         setCreateTaskVisibility={setCreateTaskVisibility}
@@ -67,6 +77,11 @@ export default function Home() {
         visible={deleteTaskVisibility}
         setDeleteTaskVisibility={setDeleteTaskVisibility}
       />
+      <EditTask
+        id={editID}
+        visible={editTaskVisibility}
+        setEditTaskVisibility={setEditTaskVisibility}
+        />
       <SkinnySidebar active="tasks"/>
       <LargeSidebar />
       <div className="flex h-screen w-full items-start justify-start">
@@ -92,6 +107,7 @@ export default function Home() {
               <ListTasks
                 toggleAddTask={toggleAddTask}
                 toggleDeleteTask={toggleDeleteTask}
+                toggleEditTask={toggleEditTask}
               />
             </div>
           </div>
