@@ -67,7 +67,7 @@ const CalendarTask = ({ task, taskCellRef, cellRef, hideTaskModal }) => {
   return (
     <div
       ref={calendarTaskModalRef}
-      className={`absolute -left-4 top-1/2 z-50 flex min-w-[26rem] -translate-x-full -translate-y-1/2 flex-col items-start justify-start rounded-lg border border-dark-700 bg-dark-900 px-6 py-4 text-sm transition-all ${
+      className={`absolute -left-4 top-1/2 z-50 flex min-w-[26rem] -translate-x-full -translate-y-1/2 flex-col items-start justify-start rounded-lg border border-dark-700 bg-[#0b0b0b] px-6 py-4 text-sm transition-all ${
         visible ? "" : "hidden"
       }`}
     >

@@ -1,8 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Task from "../../../../models/task";
-import {
-  X,
-} from "lucide-react";
+import { X } from "lucide-react";
 
 const AddTask = ({ visible, setCreateTaskVisibility }) => {
   const [title, setTitle] = useState("");
@@ -47,31 +45,32 @@ const AddTask = ({ visible, setCreateTaskVisibility }) => {
     toggleVisibility();
   };
 
-  const [activeSubPage, setActiveSubPage] = useState("Info");
+  const addTaskRef = useRef(null);
 
-  var infoPageActive = activeSubPage === "Info";
-  var statusPageActive = activeSubPage === "Status";
-  var dueDatePageActive = activeSubPage === "DueDate";
-  var priorityPageActive = activeSubPage === "Priority";
-  var tagsPageActive = activeSubPage === "Tags";
-
-  const changeSubPage = (page) => {
-    setActiveSubPage(page);
+  const handleClickOutside = (event) => {
+    if (addTaskRef.current && !addTaskRef.current.contains(event.target)) {
+      setCreateTaskVisibility(false);
+    }
   };
 
-  const [selectedStatus, setStatusSelection] = useState("notStarted");
-
-  var notStartedSelected = selectedStatus === "notStarted";
-  var inProgressSelected = selectedStatus === "inProgress";
-  var onHoldSelected = selectedStatus === "onHold";
-  var completedSelected = selectedStatus === "completed";
+  useEffect(() => {
+    if (visible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [visible]);
 
   return (
     <div
       className={`absolute left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black/25 transition-all ${visible ? "" : "pointer-events-none opacity-0"}`}
     >
       <div
-        className={`flex w-[52rem] max-h-[52rem] flex-col items-center justify-center space-y-4 rounded-xl border border-dark-500 bg-dark-900 p-6 transition-all ${visible ? "mb-0" : "mb-32"}`}
+        ref={addTaskRef}
+        className={`flex max-h-[52rem] w-[52rem] flex-col items-center justify-center space-y-4 rounded-xl border border-dark-500 bg-dark-900 p-6 transition-all ${visible ? "mb-0" : "mb-32"}`}
       >
         <div className="flex h-full w-full items-center justify-between">
           <div className="flex max-w-[30rem] flex-col items-start justify-start">
@@ -89,26 +88,26 @@ const AddTask = ({ visible, setCreateTaskVisibility }) => {
           className="w-full text-sm placeholder:text-sm"
         >
           <div
-            className={`space-y-4 transition-all ${infoPageActive ? "" : "hidden"}`}
+            className={`space-y-4 transition-all`}
           >
             <input
               type="text"
-              className={`h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 transition-all placeholder:text-dark-400 ${infoPageActive ? "" : "hidden"}`}
+              className={`h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 transition-all placeholder:text-dark-400`}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="Name"
+              placeholder="Title"
               required
             />
             <textarea
               type="text"
-              className={`h-36 max-h-96 min-h-24 w-full rounded-lg border border-dark-500 bg-transparent px-2 py-4 text-light-50 transition-all placeholder:text-dark-400 ${infoPageActive ? "" : "hidden"}`}
+              className={`h-36 max-h-96 min-h-24 w-full rounded-lg border border-dark-500 bg-transparent px-2 py-4 text-light-50 transition-all placeholder:text-dark-400`}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder={infoPageActive ? "Description" : null}
+              placeholder="Description"
             />
 
             <p>Status</p>
-            <div className="flex justify-start items-center space-x-4" > 
+            <div className="flex items-center justify-start space-x-4">
               <input
                 type="radio"
                 name="statusRadio"
@@ -140,19 +139,19 @@ const AddTask = ({ visible, setCreateTaskVisibility }) => {
             </div>
 
             <p>Due Date</p>
-            <div className="flex justify-start items-center space-x-4" > 
-            <input
-            type="date"
-            className="h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 transition-all placeholder:text-dark-400"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-            placeholder="Due Date"
-            required
-            />
+            <div className="flex items-center justify-start space-x-4">
+              <input
+                type="date"
+                className="h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 transition-all placeholder:text-dark-400"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+                placeholder="Due Date"
+                required
+              />
             </div>
 
             <p>Priority</p>
-            <div className="flex justify-start items-center space-x-4" > 
+            <div className="flex items-center justify-start space-x-4">
               <input
                 type="radio"
                 name="priorityRadio"
@@ -177,7 +176,7 @@ const AddTask = ({ visible, setCreateTaskVisibility }) => {
             </div>
 
             <p>Team</p>
-            <div className="flex justify-start items-center space-x-4" > 
+            <div className="flex items-center justify-start space-x-4">
               <input
                 type="radio"
                 name="teamRadio"
@@ -201,7 +200,7 @@ const AddTask = ({ visible, setCreateTaskVisibility }) => {
               <label htmlFor="HR">HR</label>
             </div>
           </div>
-          <div className="flex w-full items-center justify-between text-sm font-medium mt-2">
+          <div className="mt-2 flex w-full items-center justify-between text-sm font-medium">
             <div
               onClick={toggleVisibility}
               className="cursor-pointer rounded-lg px-4 py-2 text-light-50 transition-all hover:bg-dark-500"

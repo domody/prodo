@@ -1,8 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { Ellipsis } from "lucide-react";
+import { Ellipsis, Pencil, Trash2 } from "lucide-react";
 
-import EditTask from "./EditTask";
 import DuplicateTask from "./DuplicateTask";
 import PinTask from "./PinTask";
 import EditTags from "./EditTags";
@@ -64,12 +63,13 @@ const TaskItem = ({
       <div className="relative flex !h-14 w-full items-center justify-between border-b border-dark-500 px-12">
         <div
           ref={menuRef}
-          className={`absolute left-12 z-50 w-40 select-none rounded-md border border-dark-500 bg-dark-900 p-1 text-sm opacity-100 transition-all ${isOptionsVisible ? "top-12" : "pointer-events-none left-10 top-8 z-0 scale-90 !opacity-0"}`}
+          className={`absolute left-12 z-50 w-40 select-none rounded-md border border-dark-500 bg-[#0b0b0b] p-1 text-sm opacity-100 transition-all ${isOptionsVisible ? "top-12" : "pointer-events-none left-10 top-8 z-0 scale-90 !opacity-0"}`}
         >
           <button
             onClick={() => handleEditTaskClick(id)}
-            className="flex h-full w-full cursor-pointer items-center justify-between rounded-[4px] px-2 py-1.5 transition-all hover:bg-dark-500"
+            className="flex h-full w-full cursor-pointer items-center justify-start rounded-[4px] px-2 py-1.5 transition-all hover:bg-dark-500"
           >
+            <Pencil className="mr-3 h-4 w-4" />
             Edit
           </button>
           <div
@@ -95,8 +95,9 @@ const TaskItem = ({
           >
             <button
               onClick={() => toggleDeleteTask(id)}
-              className="flex h-full w-full cursor-pointer items-center justify-between rounded-[4px] px-2 py-1.5 transition-all hover:bg-dark-500"
+              className="flex h-full w-full cursor-pointer items-center justify-start rounded-[4px] px-2 py-1.5 transition-all hover:bg-dark-500"
             >
+              <Trash2 className="mr-3 h-4 w-4" />
               Delete
             </button>
           </div>
@@ -107,7 +108,7 @@ const TaskItem = ({
             ref={buttonRef}
             onClick={handleClick}
           >
-            <Ellipsis className=" h-4 w-4" />
+            <Ellipsis className="h-4 w-4" />
           </div>
 
           <div className="w-24 text-left">

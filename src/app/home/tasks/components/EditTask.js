@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Task from "../../../../models/task";
 import { X } from "lucide-react";
 import db from "../../../../lib/firestore";
@@ -76,11 +76,34 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
     }
   };
 
+  const editTaskRef = useRef(null);
+
+  const handleClickOutside = (event) => {
+    if (
+      editTaskRef.current &&
+      !editTaskRef.current.contains(event.target)
+    ) {
+      setEditTaskVisibility(false);
+    }
+  };
+
+  useEffect(() => {
+    if (visible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [visible]);
+
   return (
     <div
       className={`absolute left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black/25 transition-all ${visible ? "" : "pointer-events-none opacity-0"}`}
     >
       <div
+        ref={editTaskRef}
         className={`flex max-h-[52rem] w-[52rem] flex-col items-center justify-center space-y-4 rounded-xl border border-dark-500 bg-dark-900 p-6 transition-all ${visible ? "mb-0" : "mb-32"}`}
       >
         <div className="flex h-full w-full items-center justify-between">
@@ -106,7 +129,7 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
               className={`h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 transition-all placeholder:text-dark-400`}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="Name"
+              placeholder="Title"
               required
             />
             <textarea
