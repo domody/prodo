@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Task from "../../../../models/task";
 import { X } from "lucide-react";
 import db from "../../../../lib/firestore";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
@@ -13,38 +14,25 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
   const [team, setTeam] = useState("");
   const [milestonesCount, setMilestonesCount] = useState("");
 
-  const [task, setTask] = useState(null);
-
   useEffect(() => {
     const fetchTask = async () => {
       if (id) {
         try {
-          const taskRef = doc(db, "tasks", id); // 'tasks' is the collection name
           const taskRef = doc(db, "tasks", id);
           const taskSnap = await getDoc(taskRef);
           if (taskSnap.exists()) {
             setTask(taskSnap.data());
             setInitialInputValues(taskSnap.data());
-            const taskData = taskSnap.data();
-            setTask(taskData);
-            setTitle(taskData.title);
-            setDescription(taskData.description);
-            setDueDate(taskData.dueDate);
-            setPriority(taskData.priority);
-            setStatus(taskData.status);
-            setTeam(taskData.team);
           } else {
-            console.log("No such document!");
             console.log("No such document!");
           }
         } catch (error) {
-          console.error("Error fetching document: ", error);
           console.error("Error fetching document: ", error);
         }
       }
     };
     fetchTask();
-  }, [id]);
+  }, [id, visible]);
 
   const setInitialInputValues = (data) => {
     setTitle(data.title);
@@ -61,12 +49,9 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
   };
 
   const handleSubmit = async (event) => {
-    //console.log("Status:".status);
     event.preventDefault();
     try {
       const editedTask = new Task(
-      const taskRef = doc(db, "tasks", id);
-      await updateDoc(taskRef, {
         title,
         description,
         dueDate,
@@ -76,7 +61,8 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
         parseInt(milestonesCount),
       );
       await Task.updateTask(id, editedTask);
-      console.log("Document written with ID: ", task.id);
+      toggleVisibility();
+      console.log("Document written with ID: ", id);
       // Clear the form
       setTitle("");
       setDescription("");
@@ -96,13 +82,9 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
     >
       <div
         className={`flex max-h-[52rem] w-[52rem] flex-col items-center justify-center space-y-4 rounded-xl border border-dark-500 bg-dark-900 p-6 transition-all ${visible ? "mb-0" : "mb-32"}`}
-        className={`flex max-h-[52rem] w-[52rem] flex-col items-center justify-center space-y-4 rounded-xl border border-dark-500 bg-dark-900 p-6 transition-all ${visible ? "mb-0" : "mb-32"}`}
       >
         <div className="flex h-full w-full items-center justify-between">
           <div className="flex max-w-[30rem] flex-col items-start justify-start">
-            <h1 className="font-semibold">
-              Edit Task {task ? `${task.team}-109` : ""}
-            </h1>
             <h1 className="font-semibold">
               Edit Task {task ? `${task.team}-109` : ""}
             </h1>
@@ -118,17 +100,18 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
           onSubmit={handleSubmit}
           className="w-full text-sm placeholder:text-sm"
         >
-          <div className="space-y-4 transition-all">
+          <div className={`space-y-4 transition-all`}>
             <input
               type="text"
-              className="h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 transition-all placeholder:text-dark-400"
+              className={`h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 transition-all placeholder:text-dark-400`}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Name"
               required
             />
             <textarea
-              className="h-36 max-h-96 min-h-24 w-full rounded-lg border border-dark-500 bg-transparent px-2 py-4 text-light-50 transition-all placeholder:text-dark-400"
+              type="text"
+              className={`h-36 max-h-96 min-h-24 w-full rounded-lg border border-dark-500 bg-transparent px-2 py-4 text-light-50 transition-all placeholder:text-dark-400`}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Description"
@@ -136,10 +119,8 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
 
             <p>Status</p>
             <div className="flex items-center justify-start space-x-4">
-            <div className="flex items-center justify-start space-x-4">
               <input
                 type="radio"
-                id="notStarted"
                 name="statusRadio"
                 value="notStarted"
                 checked={status === "notStarted"}
@@ -148,7 +129,6 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
               <label htmlFor="notStarted">Not Started</label>
               <input
                 type="radio"
-                id="inProgress"
                 name="statusRadio"
                 value="inProgress"
                 checked={status === "inProgress"}
@@ -157,7 +137,6 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
               <label htmlFor="inProgress">In Progress</label>
               <input
                 type="radio"
-                id="onHold"
                 name="statusRadio"
                 value="onHold"
                 checked={status === "onHold"}
@@ -166,13 +145,12 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
               <label htmlFor="onHold">On Hold</label>
               <input
                 type="radio"
-                id="completed"
                 name="statusRadio"
-                value="completed"
-                checked={status === "completed"}
+                value="Completed"
+                checked={status === "Completed"}
                 onChange={(e) => setStatus(e.target.value)}
               />
-              <label htmlFor="completed">Completed</label>
+              <label htmlFor="Completed">Completed</label>
             </div>
 
             <p>Due Date</p>
@@ -185,23 +163,12 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
                 placeholder={task ? `${task.dueDate}` : ""}
                 required
               />
-            <div className="flex items-center justify-start space-x-4">
-              <input
-                type="date"
-                className="h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 transition-all placeholder:text-dark-400"
-                value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
-                placeholder="Due Date"
-                required
-              />
             </div>
 
             <p>Priority</p>
             <div className="flex items-center justify-start space-x-4">
-            <div className="flex items-center justify-start space-x-4">
               <input
                 type="radio"
-                id="Low"
                 name="priorityRadio"
                 value="Low"
                 checked={priority === "Low"}
@@ -210,7 +177,6 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
               <label htmlFor="Low">Low</label>
               <input
                 type="radio"
-                id="Medium"
                 name="priorityRadio"
                 value="Medium"
                 checked={priority === "Medium"}
@@ -219,7 +185,6 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
               <label htmlFor="Medium">Medium</label>
               <input
                 type="radio"
-                id="High"
                 name="priorityRadio"
                 value="High"
                 checked={priority === "High"}
@@ -230,10 +195,8 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
 
             <p>Team</p>
             <div className="flex items-center justify-start space-x-4">
-            <div className="flex items-center justify-start space-x-4">
               <input
                 type="radio"
-                id="DVLP"
                 name="teamRadio"
                 value="DVLP"
                 checked={team === "DVLP"}
@@ -242,7 +205,6 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
               <label htmlFor="DVLP">Development</label>
               <input
                 type="radio"
-                id="DSGN"
                 name="teamRadio"
                 value="DSGN"
                 checked={team === "DSGN"}
@@ -251,7 +213,6 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
               <label htmlFor="DSGN">Design</label>
               <input
                 type="radio"
-                id="HR"
                 name="teamRadio"
                 value="HR"
                 checked={team === "HR"}
@@ -260,7 +221,6 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
               <label htmlFor="HR">HR</label>
             </div>
           </div>
-          <div className="mt-2 flex w-full items-center justify-between text-sm font-medium">
           <div className="mt-2 flex w-full items-center justify-between text-sm font-medium">
             <div
               onClick={toggleVisibility}
@@ -280,5 +240,4 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
     </div>
   );
 };
-
 export default EditTask;
