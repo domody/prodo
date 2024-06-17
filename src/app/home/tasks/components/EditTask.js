@@ -14,6 +14,7 @@ import db from "../../../../lib/firestore";
 import { doc, getDoc } from "firebase/firestore";
 
 const EditTask = ({ id, visible, setEditTaskVisibility }) => {
+  const [task, setTask] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
@@ -21,40 +22,46 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
   const [status, setStatus] = useState("");
   const [team, setTeam] = useState("");
   const [milestonesCount, setMilestonesCount] = useState("");
-  
-  const [task, setTask] = useState(null);
 
   useEffect(() => {
     const fetchTask = async () => {
       if (id) {
         try {
-          const taskRef = doc(db, 'tasks', id); // 'tasks' is the collection name
+          const taskRef = doc(db, "tasks", id); // 'tasks' is the collection name
           const taskSnap = await getDoc(taskRef);
           if (taskSnap.exists()) {
             setTask(taskSnap.data());
+            setInitialInputValues(taskSnap.data());
           } else {
-            console.log('No such document!');
+            console.log("No such document!");
           }
         } catch (error) {
-          console.error('Error fetching document: ', error);
+          console.error("Error fetching document: ", error);
         }
       }
     };
-
     fetchTask();
   }, [id]);
 
-
+  const setInitialInputValues = (data) => {
+    setTitle(data.title);
+    setDescription(data.description);
+    setDueDate(data.dueDate);
+    setPriority(data.priority);
+    setStatus(data.status);
+    setTeam(data.team);
+    setMilestonesCount(data.milestonesCount);
+  };
 
   const toggleVisibility = () => {
     setEditTaskVisibility(!visible);
   };
 
   const handleSubmit = async (event) => {
-    console.log("Status:".status);
+    //console.log("Status:".status);
     event.preventDefault();
     try {
-      const task = new Task(
+      const editedTask = new Task(
         title,
         description,
         dueDate,
@@ -63,7 +70,7 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
         team,
         parseInt(milestonesCount),
       );
-      await Task.updateTask(task.id, task)
+      await Task.updateTask(id, editedTask);
       console.log("Document written with ID: ", task.id);
       // Clear the form
       setTitle("");
@@ -104,11 +111,13 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
       className={`absolute left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black/25 transition-all ${visible ? "" : "pointer-events-none opacity-0"}`}
     >
       <div
-        className={`flex w-[52rem] max-h-[52rem] flex-col items-center justify-center space-y-4 rounded-xl border border-dark-500 bg-dark-900 p-6 transition-all ${visible ? "mb-0" : "mb-32"}`}
+        className={`flex max-h-[52rem] w-[52rem] flex-col items-center justify-center space-y-4 rounded-xl border border-dark-500 bg-dark-900 p-6 transition-all ${visible ? "mb-0" : "mb-32"}`}
       >
         <div className="flex h-full w-full items-center justify-between">
           <div className="flex max-w-[30rem] flex-col items-start justify-start">
-            <h1 className="font-semibold">Edit Task {task ? `${task.team}-109` : ""}</h1>
+            <h1 className="font-semibold">
+              Edit Task {task ? `${task.team}-109` : ""}
+            </h1>
             <p className="mt-1 text-sm text-dark-300">
               Change the inputs to edit the task.
             </p>
@@ -142,7 +151,7 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
             />
 
             <p>Status</p>
-            <div className="flex justify-start items-center space-x-4" > 
+            <div className="flex items-center justify-start space-x-4">
               <input
                 type="radio"
                 name="statusRadio"
@@ -174,19 +183,19 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
             </div>
 
             <p>Due Date</p>
-            <div className="flex justify-start items-center space-x-4" > 
-            <input
-            type="date"
-            className="h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 transition-all placeholder:text-dark-400"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-            placeholder={task ? `${task.dueDate}` : ""}
-            required
-            />
+            <div className="flex items-center justify-start space-x-4">
+              <input
+                type="date"
+                className="h-12 w-full rounded-lg border border-dark-500 bg-transparent px-2 text-light-50 transition-all placeholder:text-dark-400"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+                placeholder={task ? `${task.dueDate}` : ""}
+                required
+              />
             </div>
 
             <p>Priority</p>
-            <div className="flex justify-start items-center space-x-4" > 
+            <div className="flex items-center justify-start space-x-4">
               <input
                 type="radio"
                 name="priorityRadio"
@@ -211,7 +220,7 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
             </div>
 
             <p>Team</p>
-            <div className="flex justify-start items-center space-x-4" > 
+            <div className="flex items-center justify-start space-x-4">
               <input
                 type="radio"
                 name="teamRadio"
@@ -235,7 +244,7 @@ const EditTask = ({ id, visible, setEditTaskVisibility }) => {
               <label htmlFor="HR">HR</label>
             </div>
           </div>
-          <div className="flex w-full items-center justify-between text-sm font-medium mt-2">
+          <div className="mt-2 flex w-full items-center justify-between text-sm font-medium">
             <div
               onClick={toggleVisibility}
               className="cursor-pointer rounded-lg px-4 py-2 text-light-50 transition-all hover:bg-dark-500"
