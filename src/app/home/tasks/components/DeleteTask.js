@@ -1,13 +1,12 @@
-// app/components/DeleteItem.js
 import db from "../../../../lib/firestore";
 import { doc, deleteDoc } from "firebase/firestore";
 import { AlertTriangle } from "lucide-react";
 
 const DeleteItem = ({ id, visible, setDeleteTaskVisibility }) => {
   const handleDelete = async () => {
-    const itemRef = doc(db, "tasks", id);
+    const taskRef = doc(db, "tasks", id);
     try {
-      await deleteDoc(itemRef);
+      await deleteDoc(taskRef);
       toggleVisibility();
     } catch (error) {
       console.error("Error deleting document: ", error);

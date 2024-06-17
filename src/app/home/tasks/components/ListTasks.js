@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { Folder } from "lucide-react";
 import db from "../../../../lib/firestore";

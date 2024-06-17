@@ -1,19 +1,3 @@
-/* 
-
-********************************************************
-
-THIS IS WORK IN PROGRESS
-
-IM TRYNA FIGURE OUT HOW TO MAKE IT LOOK GOOD
-
-HAVE A GO IF YOU LIKE
-
-FULL CAPS LOOKS COOL
-
-********************************************************
-
-*/
-
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { Ellipsis } from "lucide-react";
@@ -66,8 +50,8 @@ const TaskItem = ({
 
   const handleEditTaskClick = (id) => {
     toggleEditTask(id);
-    handleClick()
-  }
+    handleClick();
+  };
 
   // var InProgress = state === "InProgress";
   // var Assigned = state === "Assigned";
@@ -80,20 +64,14 @@ const TaskItem = ({
       <div className="relative flex !h-14 w-full items-center justify-between border-b border-dark-500 px-12">
         <div
           ref={menuRef}
-          className={`absolute left-12 z-50 w-40 select-none rounded-md border border-dark-500 bg-dark-900 p-1 text-sm opacity-100 transition-all ${isOptionsVisible ? "top-12" : "pointer-events-none scale-90 left-10 !opacity-0 z-0 top-8"}`}
+          className={`absolute left-12 z-50 w-40 select-none rounded-md border border-dark-500 bg-dark-900 p-1 text-sm opacity-100 transition-all ${isOptionsVisible ? "top-12" : "pointer-events-none left-10 top-8 z-0 scale-90 !opacity-0"}`}
         >
           <button
             onClick={() => handleEditTaskClick(id)}
-            className="flex h-full w-full cursor-pointer items-center justify-between rounded-md px-2 py-1.5 transition-all hover:bg-dark-500"
+            className="flex h-full w-full cursor-pointer items-center justify-between rounded-[4px] px-2 py-1.5 transition-all hover:bg-dark-500"
           >
             Edit
           </button>
-          <div
-            className="flex h-full w-full items-center justify-start"
-            onClick={handleClick}
-          >
-            <EditTask id={id} />
-          </div>
           <div
             className="flex h-full w-full items-center justify-start"
             onClick={handleClick}
@@ -117,7 +95,7 @@ const TaskItem = ({
           >
             <button
               onClick={() => toggleDeleteTask(id)}
-              className="flex h-full w-full cursor-pointer items-center justify-between rounded-md px-2 py-1.5 transition-all hover:bg-dark-500"
+              className="flex h-full w-full cursor-pointer items-center justify-between rounded-[4px] px-2 py-1.5 transition-all hover:bg-dark-500"
             >
               Delete
             </button>

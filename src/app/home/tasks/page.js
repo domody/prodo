@@ -1,37 +1,10 @@
-/* 
-
-********************************************************
-
-THIS IS WORK IN PROGRESS
-
-IM TRYNA FIGURE OUT HOW TO MAKE IT LOOK GOOD
-
-HAVE A GO IF YOU LIKE
-
-FULL CAPS LOOKS COOL
-
-********************************************************
-
-*/
 "use client";
-
 import React, { useState } from "react";
 import SkinnySidebar from "../components/skinnySidebar";
 import LargeSidebar from "../components/largeSidebar";
-import { PlusIcon } from "@heroicons/react/24/outline";
-import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import {
   Plus,
-  Loader,
-  Clock,
-  CircleDashed,
-  CircleCheck,
-  CircleSlash,
   Search,
-  Users,
-  HomeIcon,
-  Folder,
-  ChevronDown,
 } from "lucide-react";
 
 import AddTask from "./components/AddTask";

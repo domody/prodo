@@ -146,6 +146,10 @@ const Calendar = () => {
     setTaskCellRef(null);
   };
 
+  const cellFocus = (index) => {
+    alert(index)
+  }
+
   return (
     <>
       <div className="h-20 w-full border-b border-dark-500">
@@ -210,6 +214,7 @@ const Calendar = () => {
                   <div
                     key={day}
                     className={`scrollbar-hidden relative z-0 h-[calc((100vh-5rem-3rem)/6)] cursor-pointer flex-col items-start justify-start overflow-y-auto border-r border-t border-dark-800 p-3 text-center text-sm transition-all`}
+                    onClick={() => cellFocus(day)}
                   >
                     <div className="sticky left-0 top-0 w-full bg-dark-900">
                       <div

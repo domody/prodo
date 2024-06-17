@@ -2,14 +2,7 @@ import { useState } from "react";
 import Task from "../../../../models/task";
 import {
   X,
-  Tag,
-  CircleSlash,
-  CalendarIcon,
-  AlertCircle,
-  Info,
 } from "lucide-react";
-import { Circle } from "react-feather";
-import Calendar from "./Calendar";
 
 const AddTask = ({ visible, setCreateTaskVisibility }) => {
   const [title, setTitle] = useState("");
@@ -112,7 +105,6 @@ const AddTask = ({ visible, setCreateTaskVisibility }) => {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder={infoPageActive ? "Description" : null}
-              resiz
             />
 
             <p>Status</p>

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
-import { X, Text, EllipsisVertical } from "lucide-react";
+import { X, Trash, Pencil } from "lucide-react";
 import db from "../../../../lib/firestore";
-import { doc, updateDoc } from "firebase/firestore"; 
+import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 
 const CalendarTask = ({ task, taskCellRef, cellRef, hideTaskModal }) => {
   const calendarTaskModalRef = useRef(null);
@@ -32,10 +32,10 @@ const CalendarTask = ({ task, taskCellRef, cellRef, hideTaskModal }) => {
     try {
       const taskRef = doc(db, "tasks", task.id);
       await updateDoc(taskRef, {
-        completed: true
+        completed: true,
       });
-      console.log('Successfully updated document.');
-      hideTaskModal()
+      console.log("Successfully updated document.");
+      hideTaskModal();
     } catch (error) {
       console.error("Error updating document: ", error);
     }
@@ -45,12 +45,22 @@ const CalendarTask = ({ task, taskCellRef, cellRef, hideTaskModal }) => {
     try {
       const taskRef = doc(db, "tasks", task.id);
       await updateDoc(taskRef, {
-        completed: false
+        completed: false,
       });
-      console.log('Successfully updated document.');
-      hideTaskModal()
+      console.log("Successfully updated document.");
+      hideTaskModal();
     } catch (error) {
       console.error("Error updating document: ", error);
+    }
+  };
+
+  const handleDelete = async () => {
+    const taskRef = doc(db, "tasks", task.id);
+    try {
+      await deleteDoc(taskRef);
+    } catch (error) {
+      console.error("Error deleting document: ", error);
+      alert("Error deleting item");
     }
   };
 
@@ -61,20 +71,40 @@ const CalendarTask = ({ task, taskCellRef, cellRef, hideTaskModal }) => {
         visible ? "" : "hidden"
       }`}
     >
-      <div className="flex w-full items-center justify-between">
-        <h1 className="text-lg text-nowrap mr-12">{task.title}</h1>
-        <div className="rounded-full p-2 hover:bg-dark-800 focus:bg-dark-500">
-          <EllipsisVertical className="h-5 w-5 cursor-pointer" />
+      <div className="flex w-full items-center justify-end space-x-6 mb-4">
+        <div
+          className="rounded-full p-2 hover:bg-dark-800 focus:bg-dark-500"
+          // onClick={}
+        >
+          <Pencil className="h-5 w-5 cursor-pointer" />
+        </div>
+        <div
+          className="rounded-full p-2 hover:bg-dark-800 focus:bg-dark-500"
+          onClick={handleDelete}
+        >
+          <Trash className="h-5 w-5 cursor-pointer" />
+        </div>
+        <div
+          className="rounded-full p-2 hover:bg-dark-800 focus:bg-dark-500"
+          onClick={() => hideTaskModal()}
+        >
+          <X className="h-5 w-5 cursor-pointer" />
         </div>
       </div>
+      <div className="flex w-full items-center justify-between">
+        <h1 className="mr-12 text-nowrap text-lg font-semibold">
+          {task.title}
+        </h1>
+      </div>
+
       {/* <div>{task.priority}</div> */}
       <p className="mb-4 text-xs text-dark-300">{task.dueDate}</p>
-      <p className="mb-4 line-clamp-3">{task.description}</p>
+      <p className="mb-4 line-clamp-3 leading-relaxed">{task.description}</p>
       <div className="flex items-center justify-start space-x-4 text-dark-300">
         <p>{task.priority}</p>
         <p>{task.team}</p>
       </div>
-      <div className="mt-6 flex w-full items-center justify-end text-ms font-medium">
+      <div className="text-ms mt-6 flex w-full items-center justify-end font-medium">
         <button
           type="submit"
           className={`{/*bg-light-50  text-dark-900*/} rounded-lg border border-dark-700 px-4 py-1.5 ${task.completed ? "hidden" : ""}`}
