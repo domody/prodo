@@ -1,6 +1,6 @@
-import { ref, set, get, update, remove, child } from "firebase/database";
+import { ref, set, get, remove, child } from "firebase/database";
 import db from "../lib/firestore";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, updateDoc, doc, addDoc } from "firebase/firestore";
 
 class Task {
   constructor(title, description, dueDate, priority, status, team, milestones) {
@@ -47,7 +47,7 @@ class Task {
           data.status,
           data.team,
           data.milestones,
-          data.completed
+          data.completed,
         );
       } else {
         console.log("No data available");
@@ -60,9 +60,17 @@ class Task {
 
   static async updateTask(id, updates) {
     try {
-      const taskRef = id;
-      await update(taskRef, updates);
-      console.log("Task updated successfully!");
+      const taskRef = doc(db, "tasks", id);
+      await updateDoc(taskRef, {
+        title: updates.title,
+        description: updates.description,
+        dueDate: updates.dueDate,
+        priority: updates.priority,
+        status: updates.status,
+        team: updates.team,
+        milestones: updates.milestones,
+        current_milestone: updates.current_milestone,
+      });
     } catch (error) {
       console.error("Error updating task:", error);
     }
