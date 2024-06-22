@@ -17,6 +17,7 @@ const TaskItem = ({
   id,
   toggleDeleteTask,
   toggleEditTask,
+  toggleTaskInfo,
 }) => {
   const [isOptionsVisible, setIsOptionsVisible] = useState(false);
   const menuRef = useRef(null);
@@ -52,6 +53,14 @@ const TaskItem = ({
     handleClick();
   };
 
+  const handleTaskClick = (event) => {
+    if (
+      !buttonRef.current.contains(event.target)
+    ) {
+      toggleTaskInfo(id)
+    }
+  }
+
   // var InProgress = state === "InProgress";
   // var Assigned = state === "Assigned";
   // var PendingReview = state === "PendingReview";
@@ -60,7 +69,10 @@ const TaskItem = ({
 
   return (
     <>
-      <div className="relative flex !h-14 w-full items-center justify-between border-b border-dark-500 px-12">
+      <div
+        className="relative flex !h-14 w-full cursor-pointer items-center justify-between border-b border-dark-500 px-12"
+        onClick={handleTaskClick}
+      >
         <div
           ref={menuRef}
           className={`absolute left-12 z-50 w-40 select-none rounded-md border border-dark-500 bg-[#0b0b0b] p-1 text-sm opacity-100 transition-all ${isOptionsVisible ? "top-12" : "pointer-events-none left-10 top-8 z-0 scale-90 !opacity-0"}`}

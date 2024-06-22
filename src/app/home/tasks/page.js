@@ -7,35 +7,45 @@ import {
   Search,
 } from "lucide-react";
 
-import AddTask from "./components/AddTask";
-import ListTasks from "./components/ListTasks";
 
+import AddTask from "./components/AddTask";
 import DeleteTask from "./components/DeleteTask";
 import EditTask from "./components/EditTask"
+import TaskInfo from "./components/TaskInfo";
+import ListTasks from "./components/ListTasks";
 
-export default function Home() {
+export default function Page() {
   const [createTaskVisiblity, setCreateTaskVisibility] = useState(false);
   const [deleteTaskVisibility, setDeleteTaskVisibility] = useState(false);
   const [editTaskVisibility, setEditTaskVisibility] = useState(false);
+  const [taskInfoVisibility, setTaskInfoVisibility] = useState(false)
 
+  const [infoID, setInfoID] = useState("")
   const [deleteID, setDeleteID] = useState("");
   const [editID, setEditID] = useState("");
 
   const toggleAddTask = () => {
-    setCreateTaskVisibility(true);
+    setCreateTaskVisibility(!createTaskVisiblity);
   };
 
   const toggleDeleteTask = (id) => {
-    setDeleteTaskVisibility(true);
+    setDeleteTaskVisibility(!deleteTaskVisibility);
     setDeleteID(id);
   };
   
   const toggleEditTask = (id) => {
     setEditID(id);
     setTimeout(() => {
-      setEditTaskVisibility(true);
+      setEditTaskVisibility(!editTaskVisibility);
     }, 100);
   };
+
+  const toggleTaskInfo = (id) => {
+    setInfoID(id)
+    setTimeout(() => {
+          setTaskInfoVisibility(!taskInfoVisibility)
+    }, 100);
+  }
 
 
   return (
@@ -55,6 +65,7 @@ export default function Home() {
         visible={editTaskVisibility}
         setEditTaskVisibility={setEditTaskVisibility}
         />
+      <TaskInfo id={infoID} visible={taskInfoVisibility} setTaskInfoVisibility={setTaskInfoVisibility}/>
       <SkinnySidebar active="tasks"/>
       <LargeSidebar />
       <div className="flex h-screen w-full items-start justify-start">
@@ -81,6 +92,7 @@ export default function Home() {
                 toggleAddTask={toggleAddTask}
                 toggleDeleteTask={toggleDeleteTask}
                 toggleEditTask={toggleEditTask}
+                toggleTaskInfo={toggleTaskInfo}
               />
             </div>
           </div>

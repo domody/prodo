@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import Task from "../../../../models/task";
 import { X } from "lucide-react";
 import db from "../../../../lib/firestore";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 
 const EditTask = ({ id, visible, setEditTaskVisibility }) => {
   const [task, setTask] = useState(null);
